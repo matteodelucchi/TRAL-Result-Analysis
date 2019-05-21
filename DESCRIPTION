@@ -1,0 +1,11 @@
+Package: TRALResultAnalysis
+Title: Analysis of the output of TRAL
+Version: 0.0.0.9000
+Authors@R: person("Matteo", "Delucchi", email = "mail@matteodelucchi.com", role = c("aut"))
+Description: Providing an example environment for the analysis of tandem repeats in proteomic sequences.
+Depends: R (>= 3.6.0)
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+License: GNU GENERAL PUBLIC LICENSE
+Encoding: UTF-8
+LazyData: true

@@ -1,0 +1,11 @@
+---
+title: "General Overview of Tandem Repeats"
+author: "Matteo Delucchi"
+date: "May 21, 2019"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{General Overview of Tandem Repeats}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
