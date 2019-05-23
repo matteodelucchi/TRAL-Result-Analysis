@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Matteo Delucchi" />
+
+<meta name="date" content="2019-05-21" />
+
+<title>General Overview of Tandem Repeats</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">General Overview of Tandem Repeats</h1>
+<h3 class="subtitle">An Example of Colorectal Cancer</h3>
+<h4 class="author">Matteo Delucchi</h4>
+<h4 class="date">May 21, 2019</h4>
+
+
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(TRALResultAnalysis)
+tr_crcfavorable_path &lt;-<span class="st"> &quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_favorable_proteins_CRC.tsv&quot;</span>
+tr_crcunfavorable_path &lt;-<span class="st"> &quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_unfavorable_proteins_CRC.tsv&quot;</span>
+dest_file &lt;-<span class="st">&quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/data/swissprot_human.tsv&quot;</span></code></pre></div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In Switzerland, colorectal cancer is among the top 3 leading cause for cancer-related mortality <a href="https://www.krebsliga.ch/ueber-krebs/krebsarten/dickdarmkrebs/">1</a>. As the disease showes varying clinical outcomes and therapeutic responses, researchers try through personalized medicine find individually optimal treatments.</p>
+<p>The development of colorectal cancer (CRC) is accompanied by genetic and epigenetic mutations in onco- and tumor-suppressor genes which are supposed to cause CRC onset, progression and metastasis <a href="http://dx.doi.org/10.1155/2012/509348">2</a> <a href="http://dx.doi.org/10.1136/flgastro-2013-100329">3</a>.</p>
+<p>Some clinical relevant biomarkers are today already used as prognostic and/or therapeutic predictive markers <a href="https://doi.org/10.3892/or.2015.4108">4</a>.</p>
+<div id="colorectal-cancer-on-a-molecular-level" class="section level2">
+<h2>Colorectal Cancer on a Molecular Level</h2>
+<p>Undifferentiated cells, such as colon stem an progenitor cells, are located at the bottom of a crypt in healthy colons. They are able of self-renewal and pluripotency. During their live-cycle of about 14 days, they differentiate in all epithelial colon cell lineages (Paneth, goblet, enterocytes and enteroendocrine) while migrating from the crypt to the top of the villus leading into apoptosis <a href="https://doi.org/10.1073/pnas.0707210104">5</a>. The maintenance of genomic integrity is essential for proper cell differentiation in the colon. If it is lost, it’s easy to accumulate multiple mutations through chromomal instability <a href="https://doi.org/10.1053/j.gastro.2009.12.065">6</a>, microsatellite instability <a href="https://doi.org/10.1053/j.gastro.2009.12.064">7</a>, aberrant DNA methylation <a href="https://doi.org/10.1053/j.gastro.2006.09.018">8</a> and/or DNA repair defects leading to CRC.</p>
+<p>Several altered molecular signaling pathways are involved in CRC onset, such as Wnt/APC/<span class="math inline">\(\beta\)</span>-catenin, phosphoinositide 3-kinase (PI3K)/AKT/glycogen synthase kinase-3<span class="math inline">\(\beta\)</span> (GSK-3<span class="math inline">\(\beta\)</span>), transforming growth factor-<span class="math inline">\(\beta\)</span> (TGF)-<span class="math inline">\(\beta\)</span>/Smad, NF- κb or mismatch repair genes (MMR) <a href="https://doi.org/10.3892/or.2015.4108">9</a>.</p>
+<div id="wnt-beta-catenin-pathway" class="section level3">
+<h3>Wnt / <span class="math inline">\(\beta\)</span>-catenin pathway</h3>
+<p>Upon secretion of Wnt ligand it bind to Frizzled (Fz) receptors. This results in the inactivation of the multifunctional kinase GSK-3<span class="math inline">\(\beta\)</span> and in the stabilisation of <span class="math inline">\(\beta\)</span>-catenin. <span class="math inline">\(\beta\)</span>-catenin is a E-cadherin cell-cell adhesion protein and transcriptional activator. If it is stabilized, it gets accumulated in the cytoplasm and is translocated into the nucleus. There it interacts with members of the lymphoid enhancer factor (LEF)/t-cell factor (TCF) and activates specific target genes. In absence of Wnt-signal, <span class="math inline">\(\beta\)</span>-catenin is degradated preventing its nuclear translocation. The ubiquination and phosphorylation of <span class="math inline">\(\beta\)</span>-catenin is controlled through casein kinase 1 (CK1) and the APC/Axin/GSK-3<span class="math inline">\(\beta\)</span>-complex.</p>
+<p>Activation of the Wnt pathway through mutations in the APC gene is known to have a leading role in CRC pathogenesis. The protein product of APC is among the key components of <span class="math inline">\(\beta\)</span>-catenin destruction leading to an accumulation of <span class="math inline">\(\beta\)</span>-catenin which is then translocated to the nucleus where it mediates gene transcription through interaction with the LEF/TCF transcription factor family (LEF-1/LEF1, TCF-1/TCF7, TCF-3/TCF7L1, and TCF-4/TCF7L2) <a href="http://www.doi.org/10.4103/1477-3163.78111">10</a>. The same outcome is expected, however, less frequently, through mutations in <span class="math inline">\(\beta\)</span>-catenin and Axin2 <a href="http://www.doi.org/10.1126/science.275.5307.1787">11</a> <a href="https://doi.org/10.1038/79859">12</a></p>
+<p>An increased concentration of <span class="math inline">\(\beta\)</span>-catenin in the cytoplasm promotes cellular proliferation. Nuclear expression of <span class="math inline">\(\beta\)</span>-catenin can be identified immunohistochemically but is not a unique factor for CRC. However, it’s among one of the components of a diagnostic panel <a href="https://doi.org/10.3892/or.2018.6330">13</a>.</p>
+</div>
+</div>
+<div id="tandem-repeat-detection-filtering" class="section level2">
+<h2>Tandem Repeat Detection &amp; Filtering</h2>
+<p>In this vignette, we analyse proteins containing tandem repeats (TRs) which are expressed by CRC favorable and unfavorable genes <a href="https://www.proteinatlas.org/humanproteome/pathology/colorectal+cancer#colorectal%20cancerunfavourable">14</a> with a focus on the members of the Wnt/<span class="math inline">\(\beta\)</span>-catenin pathway.</p>
+<ul>
+<li>why wnt-pathway? -&gt; as an example and it’s well investigated, it’s has protein members involved in signaling, protein-protein interaction and finally transcription. All known for having TRs!</li>
+<li>explain more about the favorable and unfavorable genes</li>
+</ul>
+<div id="uniprot-as-data-source" class="section level3">
+<h3>Uniprot as Data Source</h3>
+<p>-swissprot /uniprot -human proteome -mention python script ‘download_multiple_prot_from_gene.py’ -&gt; methods</p>
+</div>
+<div id="tral-the-search-for-trs" class="section level3">
+<h3>TRAL: The search for TRs</h3>
+<p>-the problems of TR detection (Repeats or not repeat? -&gt; schaper; Lina thesis) -mention python script ‘TR_in_multiple_Protein.py’ -&gt; methods</p>
+</div>
+<div id="processing-tral-results-for-data-mining-in-r" class="section level3">
+<h3>Processing TRAL Results for Data Mining in R</h3>
+<p>-mention python script ‘concatenate_multiple_TRs.py’ -&gt; methods</p>
+</div>
+</div>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<div id="data-loading" class="section level2">
+<h2>Data Loading</h2>
+<div id="get-an-overview" class="section level3">
+<h3>Get an overview</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tr_fav)
+<span class="co">#&gt; 'data.frame':    67 obs. of  11 variables:</span>
+<span class="co">#&gt;  $ ID                  : chr  &quot;Q99684&quot; &quot;A1YPR0&quot; &quot;A1YPR0&quot; &quot;Q9NSY1&quot; ...</span>
+<span class="co">#&gt;  $ begin               : int  176 298 154 487 460 16 283 77 54 39 ...</span>
+<span class="co">#&gt;  $ msa_original        : chr  &quot;GA,GA,GA&quot; &quot;P,P,P,P,P,P,P&quot; &quot;E,E,E,E,E,E,E,E,E&quot; &quot;H,H,H,H,H,H,H,H&quot; ...</span>
+<span class="co">#&gt;  $ l_effective         : int  2 1 1 1 1 3 2 2 2 1 ...</span>
+<span class="co">#&gt;  $ n_effective         : num  3 7 9 8 27 ...</span>
+<span class="co">#&gt;  $ repeat_region_length: int  6 7 9 8 27 12 6 10 7 6 ...</span>
+<span class="co">#&gt;  $ divergence          : num  1e-10 1e-10 1e-10 1e-10 1e-10 ...</span>
+<span class="co">#&gt;  $ pvalue              : num  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ total_repeat_length : num  6 7 9 8 27 10 6 7 7 6 ...</span>
+<span class="co">#&gt;  $ center              : num  178 301 158 490 473 ...</span>
+<span class="co">#&gt;  $ l_type              : chr  &quot;micro&quot; &quot;homo&quot; &quot;homo&quot; &quot;homo&quot; ...</span>
+<span class="kw">head</span>(tr_fav)
+<span class="co">#&gt;       ID begin                                          msa_original</span>
+<span class="co">#&gt; 1 Q99684   176                                              GA,GA,GA</span>
+<span class="co">#&gt; 2 A1YPR0   298                                         P,P,P,P,P,P,P</span>
+<span class="co">#&gt; 3 A1YPR0   154                                     E,E,E,E,E,E,E,E,E</span>
+<span class="co">#&gt; 4 Q9NSY1   487                                       H,H,H,H,H,H,H,H</span>
+<span class="co">#&gt; 5 Q9NSY1   460 Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q</span>
+<span class="co">#&gt; 6 Q9NSY1    16                                   GGAA,GGGA,GG-A,G---</span>
+<span class="co">#&gt;   l_effective n_effective repeat_region_length divergence pvalue</span>
+<span class="co">#&gt; 1           2    3.000000                    6      1e-10      0</span>
+<span class="co">#&gt; 2           1    7.000000                    7      1e-10      0</span>
+<span class="co">#&gt; 3           1    9.000000                    9      1e-10      0</span>
+<span class="co">#&gt; 4           1    8.000000                    8      1e-10      0</span>
+<span class="co">#&gt; 5           1   27.000000                   27      1e-10      0</span>
+<span class="co">#&gt; 6           3    3.333333                   12      1e-10      0</span>
+<span class="co">#&gt;   total_repeat_length center l_type</span>
+<span class="co">#&gt; 1                   6  178.5  micro</span>
+<span class="co">#&gt; 2                   7  301.0   homo</span>
+<span class="co">#&gt; 3                   9  158.0   homo</span>
+<span class="co">#&gt; 4                   8  490.5   homo</span>
+<span class="co">#&gt; 5                  27  473.0   homo</span>
+<span class="co">#&gt; 6                  10   20.5  micro</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tr_unfav)
+<span class="co">#&gt; 'data.frame':    128 obs. of  11 variables:</span>
+<span class="co">#&gt;  $ ID                  : chr  &quot;Q9H7P9&quot; &quot;Q9H7P9&quot; &quot;P20393&quot; &quot;O43166&quot; ...</span>
+<span class="co">#&gt;  $ begin               : int  593 322 82 1461 819 758 620 606 1022 268 ...</span>
+<span class="co">#&gt;  $ msa_original        : chr  &quot;E,E,E,E,E,E,E,E&quot; &quot;G,G,G,G,G,G&quot; &quot;S,S,S,S,S,S,S,S,S,S,S,S&quot; &quot;S,S,S,S,S,S,S,S&quot; ...</span>
+<span class="co">#&gt;  $ l_effective         : int  1 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="co">#&gt;  $ n_effective         : num  8 6 12 8 7 6 6 6 18 15 ...</span>
+<span class="co">#&gt;  $ repeat_region_length: int  8 6 12 8 7 6 6 6 18 15 ...</span>
+<span class="co">#&gt;  $ divergence          : num  1e-10 1e-10 1e-10 1e-10 1e-10 ...</span>
+<span class="co">#&gt;  $ pvalue              : num  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ total_repeat_length : num  8 6 12 8 7 6 6 6 18 15 ...</span>
+<span class="co">#&gt;  $ center              : num  596.5 324.5 87.5 1464.5 822 ...</span>
+<span class="co">#&gt;  $ l_type              : chr  &quot;homo&quot; &quot;homo&quot; &quot;homo&quot; &quot;homo&quot; ...</span></code></pre></div>
+</div>
+<div id="add-more-information-about-the-proteins-from-swissprot" class="section level3">
+<h3>Add more information about the Proteins from SwissProt</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp_url &lt;-<span class="st"> &quot;https://www.uniprot.org/uniprot/?query=organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20reviewed:yes&amp;format=tab&amp;columns=id,entry%20name,reviewed,protein%20names,genes,organism,length,virus%20hosts,encodedon,database(Pfam),interactor,comment(ABSORPTION),feature(ACTIVE%20SITE),comment(ACTIVITY%20REGULATION),feature(BINDING%20SITE),feature(CALCIUM%20BIND),comment(CATALYTIC%20ACTIVITY),comment(COFACTOR),feature(DNA%20BINDING),ec,comment(FUNCTION),comment(KINETICS),feature(METAL%20BINDING),feature(NP%20BIND),comment(PATHWAY),comment(PH%20DEPENDENCE),comment(REDOX%20POTENTIAL),rhea-id,feature(SITE),comment(TEMPERATURE%20DEPENDENCE)&amp;sort=organism&quot;</span>
+
+<span class="cf">if</span>(<span class="op">!</span><span class="kw">file.exists</span>(dest_file)){
+    <span class="kw">download.file</span>(sp_url, <span class="dt">destfile =</span> dest_file)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp_all_fav &lt;-<span class="st"> </span><span class="kw">load_swissprot</span>(dest_file, tr_fav)
+sp_all_unfav &lt;-<span class="st"> </span><span class="kw">load_swissprot</span>(dest_file, tr_unfav)</code></pre></div>
+<p>Add meta_data from sp_all to tr_unfav -&gt; Do a left join.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tr_unfav_sp =<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> tr_unfav, <span class="dt">y =</span> sp_all_unfav, <span class="dt">by =</span> <span class="st">&quot;ID&quot;</span>, <span class="dt">all.x =</span> <span class="ot">TRUE</span>)
+tr_fav_sp =<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> tr_fav, <span class="dt">y =</span> sp_all_fav, <span class="dt">by =</span> <span class="st">&quot;ID&quot;</span>, <span class="dt">all.x =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tr_unfav_sp)
+<span class="co">#&gt; 'data.frame':    128 obs. of  45 variables:</span>
+<span class="co">#&gt;  $ ID                  : chr  &quot;O43166&quot; &quot;O60292&quot; &quot;O60292&quot; &quot;O75151&quot; ...</span>
+<span class="co">#&gt;  $ begin               : int  1461 55 372 635 506 473 419 10 28 39 ...</span>
+<span class="co">#&gt;  $ msa_original        : chr  &quot;S,S,S,S,S,S,S,S&quot; &quot;AT,AT,AT,AT,AT&quot; &quot;ASA,ASA,ASA&quot; &quot;FS,FS,FS&quot; ...</span>
+<span class="co">#&gt;  $ l_effective         : int  1 2 3 2 3 2 1 1 1 1 ...</span>
+<span class="co">#&gt;  $ n_effective         : num  8 5 3 3 3.33 ...</span>
+<span class="co">#&gt;  $ repeat_region_length: int  8 10 9 6 10 7 6 6 6 7 ...</span>
+<span class="co">#&gt;  $ divergence          : num  1e-10 1e-10 1e-10 1e-10 1e-10 ...</span>
+<span class="co">#&gt;  $ pvalue              : num  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co">#&gt;  $ total_repeat_length : num  8 10 9 6 10 7 6 6 6 7 ...</span>
+<span class="co">#&gt;  $ center              : num  1464.5 59.5 376 637.5 510.5 ...</span>
+<span class="co">#&gt;  $ l_type              : chr  &quot;homo&quot; &quot;micro&quot; &quot;micro&quot; &quot;micro&quot; ...</span>
+<span class="co">#&gt;  $ prot_name           : chr  &quot;SI1L1_HUMAN&quot; &quot;SI1L3_HUMAN&quot; &quot;SI1L3_HUMAN&quot; &quot;PHF2_HUMAN&quot; ...</span>
+<span class="co">#&gt;  $ Status              : chr  &quot;reviewed&quot; &quot;reviewed&quot; &quot;reviewed&quot; &quot;reviewed&quot; ...</span>
+<span class="co">#&gt;  $ protein_name        : chr  &quot;Signal-induced proliferation-associated 1-like protein 1 (SIPA1-like protein 1) (High-risk human papilloma viru&quot;| __truncated__ &quot;Signal-induced proliferation-associated 1-like protein 3 (SIPA1-like protein 3) (SPA-1-like protein 3)&quot; &quot;Signal-induced proliferation-associated 1-like protein 3 (SIPA1-like protein 3) (SPA-1-like protein 3)&quot; &quot;Lysine-specific demethylase PHF2 (EC 1.14.11.-) (GRC5) (PHD finger protein 2)&quot; ...</span>
+<span class="co">#&gt;  $ gene_names          : chr  &quot;SIPA1L1 E6TP1 KIAA0440&quot; &quot;SIPA1L3 KIAA0545 SPAL3&quot; &quot;SIPA1L3 KIAA0545 SPAL3&quot; &quot;PHF2 CENP-35 KIAA0662&quot; ...</span>
+<span class="co">#&gt;  $ Organism            : chr  &quot;Homo sapiens (Human)&quot; &quot;Homo sapiens (Human)&quot; &quot;Homo sapiens (Human)&quot; &quot;Homo sapiens (Human)&quot; ...</span>
+<span class="co">#&gt;  $ Length              : int  1804 1781 1781 1096 1096 683 1096 500 1049 407 ...</span>
+<span class="co">#&gt;  $ virus_hosts         : logi  NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ gene_encoded_by     : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ PFAM_ID             : chr  &quot;PF02145;PF11881;&quot; &quot;PF02145;PF11881;&quot; &quot;PF02145;PF11881;&quot; &quot;PF17811;PF02373;PF00628;&quot; ...</span>
+<span class="co">#&gt;  $ interacts_with      : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ Absorption          : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ active_site         : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ activity_regulation : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;ACTIVITY REGULATION: Enzymatically inactive by itself, and become active following phosphorylation by PKA.&quot; ...</span>
+<span class="co">#&gt;  $ binding_site        : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;BINDING 193 193 Alpha-ketoglutarate.; BINDING 246 246 Alpha-ketoglutarate.; BINDING 259 259 Alpha-ketoglutarate&quot;| __truncated__ ...</span>
+<span class="co">#&gt;  $ calcium_binding     : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ catalytic_activity  : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ Cofactor            : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ dna_binding         : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ EC_num              : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;1.14.11.-&quot; ...</span>
+<span class="co">#&gt;  $ prot_function       : chr  &quot;FUNCTION: Stimulates the GTPase activity of RAP2A. Promotes reorganization of the actin cytoskeleton and recrui&quot;| __truncated__ &quot;FUNCTION: Plays a critical role in epithelial cell morphogenesis, polarity, adhesion and cytoskeletal organizat&quot;| __truncated__ &quot;FUNCTION: Plays a critical role in epithelial cell morphogenesis, polarity, adhesion and cytoskeletal organizat&quot;| __truncated__ &quot;FUNCTION: Lysine demethylase that demethylates both histones and non-histone proteins. Enzymatically inactive b&quot;| __truncated__ ...</span>
+<span class="co">#&gt;  $ Kinetics            : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ metal_binding       : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;METAL 249 249 Iron; catalytic. {ECO:0000255|PROSITE-ProRule:PRU00538, ECO:0000269|PubMed:21167174}.; METAL 251 &quot;| __truncated__ ...</span>
+<span class="co">#&gt;  $ nucleotide_binding  : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ Pathway             : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ pH_dependence       : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ redox_potential     : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ Rhea_Ids            : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ Site                : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ temp_dependence     : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</span>
+<span class="co">#&gt;  $ has_tr              : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span>
+<span class="co">#&gt;  $ has_homo_tr         : logi  TRUE FALSE FALSE FALSE FALSE FALSE ...</span>
+<span class="co">#&gt;  $ has_micro_tr        : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span>
+<span class="co">#&gt;  $ has_short_tr        : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span>
+<span class="co">#&gt;  $ has_domain_tr       : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></code></pre></div>
+</div>
+</div>
+<div id="get-overview" class="section level2">
+<h2>Get overview</h2>
+<p>Let’s see how many CRC favorable TRs were predicted</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(tr_fav<span class="op">$</span>ID)
+<span class="co">#&gt; [1] 67</span></code></pre></div>
+<p>These TRs were predicted in</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(tr_fav<span class="op">$</span>ID))
+<span class="co">#&gt; [1] 51</span></code></pre></div>
+<p>different proteins. We can see, that there are more TRs found than we have proteins with TRs. Therefore, there must be proteins, which contain more <span class="math inline">\(\geq 1\)</span> TR.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(<span class="kw">table</span>(tr_fav<span class="op">$</span>ID))
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  1  2  3  6 </span>
+<span class="co">#&gt; 40  9  1  1</span></code></pre></div>
+<p>From the contingency table above, we see, that most proteins (40) have one single TR. Whereas 9 proteins contain 2 TRs. There are one which contains 3 TRs and one with 6 TRs.</p>
+<p>Let’s inspect them in more detail in the next section.</p>
+<div id="dig-deep-into-the-proteins-with-multiple-trs" class="section level3">
+<h3>Dig Deep Into the Proteins with Multiple TRs</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">protein_id_by_number_of_TR</span>(tr_fav, <span class="dv">6</span>)
+<span class="co">#&gt;        conttab[id]</span>
+<span class="co">#&gt; Q9UGU0           6</span>
+<span class="kw">protein_id_by_number_of_TR</span>(tr_fav, <span class="dv">3</span>)
+<span class="co">#&gt;        conttab[id]</span>
+<span class="co">#&gt; Q9NSY1           3</span></code></pre></div>
+<p>We next filter all TRs from the protein “Q9UGU0” which showed 6 TRs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Q9UGU0 &lt;-<span class="st"> </span>tr_fav_sp[<span class="kw">which</span>(tr_fav_sp<span class="op">$</span>ID <span class="op">==</span><span class="st"> &quot;Q9UGU0&quot;</span>),]</code></pre></div>
+<p>To get an idea about the protein’s function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Q9UGU0<span class="op">$</span>prot_function[<span class="dv">1</span>]
+<span class="co">#&gt; [1] &quot;FUNCTION: Transcriptional activator that binds to the regulatory region of MMP3 and thereby controls stromelysin expression. It stimulates the activity of various transcriptional activators such as JUN, SP1, PAX6 and ETS1, suggesting a function as a coactivator.&quot;</span></code></pre></div>
+<p>The TRs are of mostly homo TRs and one micro TRs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Q9UGU0<span class="op">$</span>l_type
+<span class="co">#&gt; [1] &quot;homo&quot;  &quot;homo&quot;  &quot;homo&quot;  &quot;homo&quot;  &quot;homo&quot;  &quot;micro&quot;</span></code></pre></div>
+<p>To explore the location of the TR in this protein, we plot the relative position of the center of the TR.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">TR_location</span>(<span class="dt">tr_all_sp =</span> Q9UGU0, <span class="dt">byTRtype =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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MaP+m2q1un///nv27JG66sYZDAZCSFxcnNSFICnJK2ARERExMTExMTE//vgjAOzatUv4MSIiQvjCkCFDYv6wf//+gICAqVOnivePePjw4WvXrhWpcXPVFZORkUEIadncYmRl0qyL2JSePXsKL5ydnQGgb9++/fr1q/+Fdu3aDR48uO7HJ5544rfffjt+/HhwcLA163xQTU2NVqvt1q2bFfal0WiWLVvWv39/K+wLtZK8ejBzKZVKlUrVvn37Bz8qKCiYPHmyp6enj4/P22+/XVNTAwClpaULFizo0qWLRqMZP358cnKy8GWO42JiYl5++WV/f//u3bvv27cPAAYNGnTu3Ln33ntv9OjRxrc9ePBgx44d33rrrabqLCwsnD59ure3t6+vb1hYWGFhoZEib9++/dxzz7m5ubm6uo4cOfL69esNimnXrl1ERIRerzfScqO/EZKA6MvqtEh8fDwAXLt2rf6bYWFhzz33XN2PpaWlX375pbe3d1ZWVoPNDQZD3759R48efeHChV27dnl6en700UeU0pEjR44YMeLMmTOXLl2aMmWKj4/P3bt3KaUsy44YMSIlJUWv13/88ccODg46nY5S+vjjj0dERAhtGtk2ICBg+/btaWlp9WsQAhAbG8vz/KBBgwYPHnz69OkzZ84MHjx44MCBPM83VWRwcPDIkSNPnDhx6tSpkJCQRx99VGiwfjEsy547d66plo38RsjK2ljAGvx1YBgmOjr6wc0PHjzo7OwsBIBSumXLlpkzZ8bExHAcV1xcLLyp1+s7der0yy+/UEpZlt24caPwfmZmJgAkJyfTev+mjW+7Zs2aB2uoC9jp06dZls3MzBTez8jIYBjm7NmzjRbJ8/zq1atTUlKENyMjIz08PITXDwasqZaN/EbIyuR1DmbSkCFD6tZ+qaio2LBhw6RJk7KyshqsMh0fHx8UFNSuXTvhx/nz58+fP//777+vra2tf9OuXq+vO9Kruz250QW9ExISjGzb4ETxwW27du3q5+cn/Ni5c+cuXbokJCSUlJQ8WCQALFmyJCYm5tChQ3FxcYcOHWpByyEhISZ/I2QdbSxgDQY5evXq5evrm5yc3GC9itraWpZt+KtpNBp3d/c7d+402rLxheCNb2v8XzDP83VLOwkUCoVer2+0yKqqqqeeeqqwsDA0NPSFF14YPnz40qVLzW25Ob8Rso62Pcjh4+MDAImJiQ3eDwwMjI+Pr6ioEH786aefnnnmmaCgoOLiYuHgEwCKiopCQ0Nv3rzZnB21ZtuHH344LS1Nq9UKP2ZnZ6enp/fq1avRIk+fPn39+vX4+Pg1a9aMHz/e+EI9TbXcnKqQdbTtgAGAi4tLXl5egzfHjx/v6ekZFhYWGxu7f//+Dz/8sFevXgEBARMnTpw+ffrp06ejo6NnzJiRkJBgfM1QhUKRkpJSUlLSgm3rjBo1qm/fvpMnT75w4cL58+cnT57cr1+/kSNHNlqki4tLZWXlf/7zn9TU1G3btq1cubK8vFwYSKwrxmTLZv9HROKR+iSwcc0ZRRQMHjw4ODj4wRYyMzMnTJjg5uYmjIALY2iVlZULFy7s1KmTRqOZMGFCamqq8GVhzEB4XVRUpFarhY+2b9/evn37iRMnNnPb+uoGOSil+fn5U6ZM8fLy8vLymjZtWkFBgZEiP/nkEy8vr/bt27/44ovJycmhoaFjx45tUEzdTptquanfCFkZriqFkIja/CEiQnKGAUNIRBgwhESEAUNIRBgwhESEAUNIRBgwhESEAUNIRBgwhESEAUNIRP8f3NE845ZZjcYAAAAASUVORK5CYII=" /><!-- --></p>
+</div>
+</div>
+<div id="filter-the-top-20-crc-genes" class="section level2">
+<h2>Filter the top 20 CRC genes:</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top20_unfav_genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;LRCH4&quot;</span>, <span class="st">&quot;POFUT2&quot;</span>, <span class="st">&quot;CLK3&quot;</span>, <span class="st">&quot;EGFL7&quot;</span>, <span class="st">&quot;DPP7&quot;</span>, <span class="st">&quot;HSH2D&quot;</span>, <span class="st">&quot;ASB6&quot;</span>, <span class="st">&quot;SPAG4&quot;</span>, <span class="st">&quot;EXOC3L4&quot;</span>, <span class="st">&quot;HSPA1A&quot;</span>, <span class="st">&quot;PAQR6&quot;</span>, <span class="st">&quot;FAM69B&quot;</span>, <span class="st">&quot;CRACR2B&quot;</span>, <span class="st">&quot;ARHGAP4&quot;</span>, <span class="st">&quot;NPDC1&quot;</span>, <span class="st">&quot;DAPK1&quot;</span>, <span class="st">&quot;CNPY3&quot;</span>, <span class="st">&quot;ARL8A&quot;</span>, <span class="st">&quot;INAFM1&quot;</span>, <span class="st">&quot;RHBDD2&quot;</span>)
+(<span class="kw">getTRbyGene</span>(<span class="dt">tr_sp =</span> tr_unfav_sp, <span class="dt">genes =</span> top20_unfav_genes))
+<span class="co">#&gt; [1] &quot;No protein with TRs found in this gene(s).&quot;</span>
+<span class="co">#&gt; [1] &quot;No protein with TRs found in this gene(s).&quot;</span>
+
+top20_fav_genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;RBM3&quot;</span>, <span class="st">&quot;NOL11&quot;</span>, <span class="st">&quot;USP53&quot;</span>, <span class="st">&quot;TEX2&quot;</span>, <span class="st">&quot;HOOK1&quot;</span>, <span class="st">&quot;ZYG11B&quot;</span>, <span class="st">&quot;HSPA8&quot;</span>, <span class="st">&quot;DLAP&quot;</span>, <span class="st">&quot;SORT1&quot;</span>, <span class="st">&quot;DDX46&quot;</span>, <span class="st">&quot;FBXO7&quot;</span>, <span class="st">&quot;ABCD3&quot;</span>, <span class="st">&quot;NGLY1&quot;</span>, <span class="st">&quot;PARS2&quot;</span>, <span class="st">&quot;CLCC1&quot;</span>, <span class="st">&quot;AP3B1&quot;</span>, <span class="st">&quot;PRPSAP1&quot;</span>, <span class="st">&quot;PSMA5&quot;</span>, <span class="st">&quot;GRSF1&quot;</span>, <span class="st">&quot;CD274&quot;</span>)
+(<span class="kw">getTRbyGene</span>(tr_fav_sp, <span class="dt">genes =</span> top20_fav_genes))
+<span class="co">#&gt; [1] &quot;No protein with TRs found in this gene(s).&quot;</span>
+<span class="co">#&gt; [1] &quot;No protein with TRs found in this gene(s).&quot;</span></code></pre></div>
+</div>
+<div id="compare-to-results-from-paulina" class="section level2">
+<h2>compare to results from paulina</h2>
+<p>She found those genes resp. proteins to have TRs</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lina_top6_genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CDX2&quot;</span>, <span class="st">&quot;CLK3&quot;</span>, <span class="st">&quot;CNPY3&quot;</span>, <span class="st">&quot;CRACR2B&quot;</span>, <span class="st">&quot;DPP7&quot;</span>, <span class="st">&quot;HSH2D&quot;</span>)
+lina_top6_prots &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Q9NQX5&quot;</span>, <span class="st">&quot;H3BVF8&quot;</span>, <span class="st">&quot;A0A0C4DFY8&quot;</span>, <span class="st">&quot;Q8N4Y2&quot;</span>, <span class="st">&quot;R4GMV4&quot;</span>, <span class="st">&quot;Q96JZ2&quot;</span>)</code></pre></div>
+<p>Not all of them appear in the list of genes from  (22. Mai 2019)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lina_top6_genes <span class="op">%in%</span><span class="st"> </span>top20_unfav_genes
+<span class="co">#&gt; [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</span></code></pre></div>
+<p>And we couldn’t find TRs in all proteins mentioned in her thesis. Only in this subset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">getTRbyGene</span>(<span class="dt">tr_sp =</span> tr_unfav_sp, <span class="dt">genes =</span> lina_top6_genes)[<span class="dv">1</span>])
+<span class="co">#&gt;        ID</span>
+<span class="co">#&gt; 75 Q96JZ2</span></code></pre></div>
+</div>
+</div>
+<div id="comparative-analysis-of-favorable-trs-and-unfavorable" class="section level1">
+<h1>Comparative analysis of favorable TRs and unfavorable</h1>
+<p>TODO!!!!!!!!!</p>
+</div>
+<div id="disorderpropensity-meta-data" class="section level1">
+<h1>Disorderpropensity Meta Data</h1>
+<div id="disorderpropensity-per-protein" class="section level2">
+<h2>Disorderpropensity per Protein</h2>
+<p>TODO: Add what we want here</p>
+<p>Start with determining the Amino Acid distribution of the TR Sequence</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(aa_freq_TR &lt;-<span class="st"> </span><span class="kw">AAfreq_in_TR</span>(Q9UGU0))
+<span class="co">#&gt;       aa_freq    aa aa_ratio</span>
+<span class="co">#&gt; A           7     A   0.0814</span>
+<span class="co">#&gt; R           0     R   0.0000</span>
+<span class="co">#&gt; N           0     N   0.0000</span>
+<span class="co">#&gt; D           0     D   0.0000</span>
+<span class="co">#&gt; C           0     C   0.0000</span>
+<span class="co">#&gt; Q          15     Q   0.1744</span>
+<span class="co">#&gt; E           0     E   0.0000</span>
+<span class="co">#&gt; G           5     G   0.0581</span>
+<span class="co">#&gt; H           0     H   0.0000</span>
+<span class="co">#&gt; I           0     I   0.0000</span>
+<span class="co">#&gt; L           0     L   0.0000</span>
+<span class="co">#&gt; K           0     K   0.0000</span>
+<span class="co">#&gt; M           0     M   0.0000</span>
+<span class="co">#&gt; F           0     F   0.0000</span>
+<span class="co">#&gt; P           7     P   0.0814</span>
+<span class="co">#&gt; S          13     S   0.1512</span>
+<span class="co">#&gt; T           0     T   0.0000</span>
+<span class="co">#&gt; W           0     W   0.0000</span>
+<span class="co">#&gt; Y           0     Y   0.0000</span>
+<span class="co">#&gt; V           0     V   0.0000</span>
+<span class="co">#&gt; U           0     U   0.0000</span>
+<span class="co">#&gt; O           0     O   0.0000</span>
+<span class="co">#&gt; B           0     B   0.0000</span>
+<span class="co">#&gt; J           0     J   0.0000</span>
+<span class="co">#&gt; Z           0     Z   0.0000</span>
+<span class="co">#&gt; X           0     X   0.0000</span>
+<span class="co">#&gt; *           0     *   0.0000</span>
+<span class="co">#&gt; -           4     -   0.0465</span>
+<span class="co">#&gt; +           0     +   0.0000</span>
+<span class="co">#&gt; .           0     .   0.0000</span>
+<span class="co">#&gt; other      35 other   0.4070</span></code></pre></div>
+<p>We sort them according their disorderpropensity. You find more information in Uversky et al. ( <a href="http://www.tandfonline.com/doi/full/10.4161/idp.24684" class="uri">http://www.tandfonline.com/doi/full/10.4161/idp.24684</a>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Not mentioned in Uversky's paper: &quot;B&quot;, &quot;O&quot;, &quot;U&quot;, &quot;Z&quot;, &quot;X&quot;. These guys might need to fit in with the rest (if possible, as some of them represent multiple aa.)</span>
+aa_order_promoting_to_disorder_promoting =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;C&quot;</span>, <span class="st">&quot;W&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;Y&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;L&quot;</span>, <span class="st">&quot;H&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;T&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;Q&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="st">&quot;E&quot;</span>, <span class="st">&quot;P&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;O&quot;</span>, <span class="st">&quot;U&quot;</span>, <span class="st">&quot;Z&quot;</span>, <span class="st">&quot;X&quot;</span>)
+<span class="co"># Sort AA according to their disorder promoting potential</span>
+aa_freq_TR &lt;-<span class="st"> </span>aa_freq_TR[<span class="kw">match</span>(aa_order_promoting_to_disorder_promoting, aa_freq_TR<span class="op">$</span>aa),]
+<span class="kw">colnames</span>(aa_freq_TR) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;aa_freq_tr&quot;</span>, <span class="st">&quot;aa&quot;</span>, <span class="st">&quot;aa_ratio_tr&quot;</span>)</code></pre></div>
+<p>We then load the dataset with information about the amino acid frequency of all swissprot proteins and the disorderpropensity of each amino acid. This data is included in the package and is generated through the script “/data-raw/create_AAfreqSP.R”. Rerunning this script, updates the amino acid frequency of swissprot proteins.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;AAfreqSP&quot;</span>)</code></pre></div>
+<p>We can now download the whole protein sequence and compare the Amino acid frequency compared to that of the overall protein</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prot_seq &lt;-<span class="st"> </span><span class="kw">download_prot_sequence</span>(<span class="st">&quot;Q9UGU0&quot;</span>)
+aa_freq_prot &lt;-<span class="st"> </span><span class="kw">AAfreq_in_prot</span>(prot_seq)
+(aa_freq_prot &lt;-<span class="st"> </span>aa_freq_prot[<span class="kw">match</span>(aa_order_promoting_to_disorder_promoting, aa_freq_prot<span class="op">$</span>aa),])
+<span class="co">#&gt;   aa_freq aa aa_ratio</span>
+<span class="co">#&gt; C      26  C   0.0133</span>
+<span class="co">#&gt; W       8  W   0.0041</span>
+<span class="co">#&gt; I      42  I   0.0214</span>
+<span class="co">#&gt; Y      52  Y   0.0265</span>
+<span class="co">#&gt; F      42  F   0.0214</span>
+<span class="co">#&gt; L     115  L   0.0587</span>
+<span class="co">#&gt; H      60  H   0.0306</span>
+<span class="co">#&gt; V      74  V   0.0378</span>
+<span class="co">#&gt; N      75  N   0.0383</span>
+<span class="co">#&gt; M      40  M   0.0204</span>
+<span class="co">#&gt; R     108  R   0.0551</span>
+<span class="co">#&gt; T      88  T   0.0449</span>
+<span class="co">#&gt; D      70  D   0.0357</span>
+<span class="co">#&gt; G     190  G   0.0969</span>
+<span class="co">#&gt; A     124  A   0.0633</span>
+<span class="co">#&gt; K     119  K   0.0607</span>
+<span class="co">#&gt; Q     167  Q   0.0852</span>
+<span class="co">#&gt; S     253  S   0.1291</span>
+<span class="co">#&gt; E     119  E   0.0607</span>
+<span class="co">#&gt; P     188  P   0.0959</span>
+<span class="co">#&gt; B       0  B   0.0000</span>
+<span class="co">#&gt; O       0  O   0.0000</span>
+<span class="co">#&gt; U       0  U   0.0000</span>
+<span class="co">#&gt; Z       0  Z   0.0000</span>
+<span class="co">#&gt; X       0  X   0.0000</span>
+<span class="kw">colnames</span>(aa_freq_prot) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;aa_freq_sp&quot;</span>, <span class="st">&quot;aa&quot;</span>, <span class="st">&quot;aa_ratio_sp&quot;</span>)</code></pre></div>
+<p>Plot our amino acid abundancy in the TRs of this protein against the amino acid abundancy in the whole protein, we see that AA with medium to high disorderpropensity fall in the TR sequence.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we combine the datasets</span>
+aa_freq_prot &lt;-<span class="st"> </span>aa_freq_prot[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,]
+disorderpropensity &lt;-<span class="st"> </span>AAfreqSP<span class="op">$</span>disorderpropensity
+df &lt;-<span class="st"> </span><span class="kw">cbind</span>(aa_freq_TR[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,], disorderpropensity, aa_freq_prot)
+df &lt;-<span class="st"> </span>df[ , <span class="op">!</span>(<span class="kw">names</span>(df) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;aa&quot;</span>))]
+
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span> aa_ratio_sp, <span class="dt">y =</span> aa_ratio_tr, <span class="dt">size =</span> disorderpropensity))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span> <span class="st">&quot;AA Background Frequency&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;AA Frequency in TRs&quot;</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">size=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Disorderpropensity&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_minimal</span>()
+p &lt;-<span class="st"> </span><span class="kw">beautifier</span>(p, <span class="dt">x.axis.text.angle =</span> <span class="dv">0</span>)
+p</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="disorderprotpensity-per-set-of-proteins" class="section level2">
+<h2>Disorderprotpensity per Set of Proteins</h2>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

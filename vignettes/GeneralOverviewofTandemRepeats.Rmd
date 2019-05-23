@@ -1,5 +1,6 @@
 ---
 title: "General Overview of Tandem Repeats"
+subtitle: "An Example of Colorectal Cancer"
 author: "Matteo Delucchi"
 date: "May 21, 2019"
 output: rmarkdown::html_vignette
@@ -8,4 +9,261 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+set.seed(123)
+```
+
+```{r Housekeeping, message=FALSE, warning=FALSE, collapse=TRUE}
+library(TRALResultAnalysis)
+tr_crcfavorable_path <- "/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_favorable_proteins_CRC.tsv"
+tr_crcunfavorable_path <- "/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_unfavorable_proteins_CRC.tsv"
+dest_file <-"/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/data/swissprot_human.tsv"
+```
+
+# Introduction
+In Switzerland, colorectal cancer is among the top 3 leading cause for cancer-related mortality [1][krebsliga]. As the disease showes varying clinical outcomes and therapeutic responses, researchers try through personalized medicine find individually optimal treatments.
+
+The development of colorectal cancer (CRC) is accompanied by genetic and epigenetic mutations in onco- and tumor-suppressor genes which are supposed to cause CRC onset, progression and metastasis [2][Pancione2012] [3][Ewing2014].
+
+Some clinical relevant biomarkers are today already used as prognostic and/or therapeutic predictive markers [4][Rosa2015].
+
+[krebsliga]: https://www.krebsliga.ch/ueber-krebs/krebsarten/dickdarmkrebs/
+[Pancione2012]: http://dx.doi.org/10.1155/2012/509348
+[Ewing2014]: http://dx.doi.org/10.1136/flgastro-2013-100329
+[Rosa2015]: https://doi.org/10.3892/or.2015.4108
+[Kosinski2007]: https://doi.org/10.1073/pnas.0707210104
+
+## Colorectal Cancer on a Molecular Level
+Undifferentiated cells, such as colon stem an progenitor cells, are located at the bottom of a crypt in healthy colons. They are able of self-renewal and pluripotency. 
+During their live-cycle of about 14 days, they differentiate in all epithelial colon cell lineages (Paneth, goblet, enterocytes and enteroendocrine) while migrating from the crypt to the top of the villus leading into apoptosis [5][Kosinski2007]. 
+The maintenance of genomic integrity is essential for proper cell differentiation in the colon. If it is lost, it's easy to accumulate multiple mutations through chromomal instability [6][Pino2010], microsatellite instability [7][Boland2010], aberrant DNA methylation [8][Goel2007] and/or DNA repair defects leading to CRC.
+
+[Goel2007]: https://doi.org/10.1053/j.gastro.2006.09.018
+[Pino2010]: https://doi.org/10.1053/j.gastro.2009.12.065
+[Boland2010]: https://doi.org/10.1053/j.gastro.2009.12.064
+
+Several altered molecular signaling pathways are involved in CRC onset, such as Wnt/APC/$\beta$-catenin, phosphoinositide 3-kinase (PI3K)/AKT/glycogen synthase kinase-3$\beta$ (GSK-3$\beta$), transforming growth factor-$\beta$ (TGF)-$\beta$/Smad, NF- κb or mismatch repair genes (MMR) [9][Rosa2015].
+
+### Wnt / $\beta$-catenin pathway
+Upon secretion of Wnt ligand it bind to Frizzled (Fz) receptors. This results in the inactivation of the multifunctional kinase GSK-3$\beta$ and in the stabilisation of $\beta$-catenin. $\beta$-catenin is a E-cadherin cell-cell adhesion protein and transcriptional activator. If it is stabilized, it gets accumulated in the cytoplasm and is translocated into the nucleus. There it interacts with members of the lymphoid enhancer factor (LEF)/t-cell factor (TCF) and activates specific target genes.
+In absence of Wnt-signal, $\beta$-catenin is degradated preventing its nuclear translocation. The ubiquination and phosphorylation of $\beta$-catenin is controlled through casein kinase 1 (CK1) and the APC/Axin/GSK-3$\beta$-complex.
+
+Activation of the Wnt pathway through mutations in the APC gene is known to have a leading role in CRC pathogenesis. The protein product of APC is among the key components of $\beta$-catenin destruction leading to an accumulation of $\beta$-catenin which is then translocated to the nucleus where it mediates gene transcription through interaction with the LEF/TCF transcription factor family (LEF-1/LEF1, TCF-1/TCF7, TCF-3/TCF7L1, and TCF-4/TCF7L2) [10][Najdi2011].
+The same outcome is expected, however, less frequently, through mutations in $\beta$-catenin and Axin2 [11][Morin1997] [12][Liu2000]
+
+[Najdi2011]: http://www.doi.org/10.4103/1477-3163.78111
+[Morin1997]: http://www.doi.org/10.1126/science.275.5307.1787
+[Liu2000]: https://doi.org/10.1038/79859
+
+An increased concentration of $\beta$-catenin in the cytoplasm promotes cellular proliferation. 
+Nuclear expression of $\beta$-catenin can be identified immunohistochemically but is not a unique factor for CRC. However, it's among one of the components of a diagnostic panel [13][Nikolouzakis2018].
+
+[Nikolouzakis2018]: https://doi.org/10.3892/or.2018.6330
+
+
+## Tandem Repeat Detection \& Filtering
+In this vignette, we analyse proteins containing tandem repeats (TRs) which are expressed by CRC favorable and unfavorable genes [14][proteinatlasCRC] with a focus on the members of the Wnt/$\beta$-catenin pathway.
+
+- why wnt-pathway? -> as an example and it's well investigated, it's has protein members involved in signaling, protein-protein interaction and finally transcription. All known for having TRs!
+- explain more about the favorable and unfavorable genes
+
+[proteinatlasCRC]: https://www.proteinatlas.org/humanproteome/pathology/colorectal+cancer#colorectal%20cancerunfavourable 
+
+### Uniprot as Data Source
+-swissprot /uniprot
+-human proteome
+-mention python script 'download_multiple_prot_from_gene.py' -> methods
+
+### TRAL: The search for TRs
+-the problems of TR detection (Repeats or not repeat? -> schaper; Lina thesis)
+-mention python script 'TR_in_multiple_Protein.py' -> methods
+
+### Processing TRAL Results for Data Mining in R
+-mention python script 'concatenate_multiple_TRs.py' -> methods
+
+
+
+
+
+
+# Methods
+
+## Data Loading 
+```{r eval=TRUE, echo=FALSE, message=TRUE, warning=TRUE}
+tr_fav = load_tr_annotations(tr_crcfavorable_path)
+tr_unfav = load_tr_annotations(tr_crcunfavorable_path)
+```
+
+### Get an overview
+
+```{r overview favorable, collapse=TRUE}
+str(tr_fav)
+head(tr_fav)
+```
+
+
+```{r overview unfavorable}
+str(tr_unfav)
+```
+
+### Add more information about the Proteins from SwissProt
+```{r Download sp_all if it doesnt exist}
+sp_url <- "https://www.uniprot.org/uniprot/?query=organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20reviewed:yes&format=tab&columns=id,entry%20name,reviewed,protein%20names,genes,organism,length,virus%20hosts,encodedon,database(Pfam),interactor,comment(ABSORPTION),feature(ACTIVE%20SITE),comment(ACTIVITY%20REGULATION),feature(BINDING%20SITE),feature(CALCIUM%20BIND),comment(CATALYTIC%20ACTIVITY),comment(COFACTOR),feature(DNA%20BINDING),ec,comment(FUNCTION),comment(KINETICS),feature(METAL%20BINDING),feature(NP%20BIND),comment(PATHWAY),comment(PH%20DEPENDENCE),comment(REDOX%20POTENTIAL),rhea-id,feature(SITE),comment(TEMPERATURE%20DEPENDENCE)&sort=organism"
+
+if(!file.exists(dest_file)){
+    download.file(sp_url, destfile = dest_file)
+}
+```
+
+```{r load sp_all}
+sp_all_fav <- load_swissprot(dest_file, tr_fav)
+sp_all_unfav <- load_swissprot(dest_file, tr_unfav)
+```
+Add meta_data from sp_all to tr_unfav -> Do a left join.
+
+```{r add meta data}
+tr_unfav_sp = merge(x = tr_unfav, y = sp_all_unfav, by = "ID", all.x = TRUE)
+tr_fav_sp = merge(x = tr_fav, y = sp_all_fav, by = "ID", all.x = TRUE)
+```
+
+```{r}
+str(tr_unfav_sp)
+```
+
+## Get overview
+Let's see how many CRC favorable TRs were predicted
+```{r}
+length(tr_fav$ID)
+```
+
+These TRs were predicted in 
+```{r}
+length(unique(tr_fav$ID))
+```
+different proteins.
+We can see, that there are more TRs found than we have proteins with TRs.
+Therefore, there must be proteins, which contain more $\geq 1$ TR. 
+
+```{r}
+table(table(tr_fav$ID))
+```
+From the contingency table above, we see, that most proteins (40) have one single TR. Whereas 9 proteins contain 2 TRs. There are one which contains 3 TRs and one with 6 TRs.
+
+Let's inspect them in more detail in the next section.
+
+### Dig Deep Into the Proteins with Multiple TRs
+```{r}
+protein_id_by_number_of_TR(tr_fav, 6)
+protein_id_by_number_of_TR(tr_fav, 3)
+```
+
+We next filter all TRs from the protein "Q9UGU0" which showed 6 TRs. 
+```{r}
+Q9UGU0 <- tr_fav_sp[which(tr_fav_sp$ID == "Q9UGU0"),]
+```
+
+To get an idea about the protein's function:
+```{r}
+Q9UGU0$prot_function[1]
+```
+
+The TRs are of mostly homo TRs and one micro TRs.
+```{r}
+Q9UGU0$l_type
+```
+
+To explore the location of the TR in this protein, we plot the relative position of the center of the TR.
+```{r}
+TR_location(tr_all_sp = Q9UGU0, byTRtype = FALSE)
+```
+
+
+## Filter the top 20 CRC genes:
+```{r}
+top20_unfav_genes <- c("LRCH4", "POFUT2", "CLK3", "EGFL7", "DPP7", "HSH2D", "ASB6", "SPAG4", "EXOC3L4", "HSPA1A", "PAQR6", "FAM69B", "CRACR2B", "ARHGAP4", "NPDC1", "DAPK1", "CNPY3", "ARL8A", "INAFM1", "RHBDD2")
+(getTRbyGene(tr_sp = tr_unfav_sp, genes = top20_unfav_genes))
+
+top20_fav_genes <- c("RBM3", "NOL11", "USP53", "TEX2", "HOOK1", "ZYG11B", "HSPA8", "DLAP", "SORT1", "DDX46", "FBXO7", "ABCD3", "NGLY1", "PARS2", "CLCC1", "AP3B1", "PRPSAP1", "PSMA5", "GRSF1", "CD274")
+(getTRbyGene(tr_fav_sp, genes = top20_fav_genes))
+```
+
+
+## compare to results from paulina
+She found those genes resp. proteins to have TRs
+```{r}
+lina_top6_genes <- c("CDX2", "CLK3", "CNPY3", "CRACR2B", "DPP7", "HSH2D")
+lina_top6_prots <- c("Q9NQX5", "H3BVF8", "A0A0C4DFY8", "Q8N4Y2", "R4GMV4", "Q96JZ2")
+```
+
+Not all of them appear in the list of genes from \url{https://www.proteinatlas.org/humanproteome/pathology/colorectal+cancer#colorectal%20cancerunfavourable} (22. Mai 2019)
+```{r}
+lina_top6_genes %in% top20_unfav_genes
+```
+
+And we couldn't find TRs in all proteins mentioned in her thesis. Only in this subset:
+```{r}
+(getTRbyGene(tr_sp = tr_unfav_sp, genes = lina_top6_genes)[1])
+```
+
+# Comparative analysis of favorable TRs and unfavorable
+TODO!!!!!!!!!
+
+# Disorderpropensity Meta Data
+## Disorderpropensity per Protein
+TODO: Add what we want here
+
+Start with determining the Amino Acid distribution of the TR Sequence
+```{r}
+(aa_freq_TR <- AAfreq_in_TR(Q9UGU0))
+```
+
+We sort them according their disorderpropensity. You find more information in Uversky et al. ( http://www.tandfonline.com/doi/full/10.4161/idp.24684).
+```{r}
+# Not mentioned in Uversky's paper: "B", "O", "U", "Z", "X". These guys might need to fit in with the rest (if possible, as some of them represent multiple aa.)
+aa_order_promoting_to_disorder_promoting = c("C", "W", "I", "Y", "F", "L", "H", "V", "N", "M", "R", "T", "D", "G", "A", "K", "Q", "S", "E", "P", "B", "O", "U", "Z", "X")
+# Sort AA according to their disorder promoting potential
+aa_freq_TR <- aa_freq_TR[match(aa_order_promoting_to_disorder_promoting, aa_freq_TR$aa),]
+colnames(aa_freq_TR) <- c("aa_freq_tr", "aa", "aa_ratio_tr")
+```
+
+
+We then load the dataset with information about the amino acid frequency of all swissprot proteins and the disorderpropensity of each amino acid. This data is included in the package and is generated through the script "/data-raw/create_AAfreqSP.R". Rerunning this script, updates the amino acid frequency of swissprot proteins.
+```{r}
+data("AAfreqSP")
+```
+
+
+We can now download the whole protein sequence and compare the Amino acid frequency compared to that of the overall protein
+```{r}
+prot_seq <- download_prot_sequence("Q9UGU0")
+aa_freq_prot <- AAfreq_in_prot(prot_seq)
+(aa_freq_prot <- aa_freq_prot[match(aa_order_promoting_to_disorder_promoting, aa_freq_prot$aa),])
+colnames(aa_freq_prot) <- c("aa_freq_sp", "aa", "aa_ratio_sp")
+```
+
+Plot our amino acid abundancy in the TRs of this protein against the amino acid abundancy in the whole protein, we see that AA with medium to high disorderpropensity fall in the TR sequence.
+```{r}
+# we combine the datasets
+aa_freq_prot <- aa_freq_prot[1:20,]
+disorderpropensity <- AAfreqSP$disorderpropensity
+df <- cbind(aa_freq_TR[1:20,], disorderpropensity, aa_freq_prot)
+df <- df[ , !(names(df) %in% c("aa"))]
+
+p <- ggplot(df, aes(x= aa_ratio_sp, y = aa_ratio_tr, size = disorderpropensity))+
+  geom_point()+
+  labs(x= "AA Background Frequency",
+       y = "AA Frequency in TRs")+
+  guides(size=guide_legend(title="Disorderpropensity"))+
+  theme_minimal()
+p <- beautifier(p, x.axis.text.angle = 0)
+p
+```
+
+
+## Disorderprotpensity per Set of Proteins
+
+
 
