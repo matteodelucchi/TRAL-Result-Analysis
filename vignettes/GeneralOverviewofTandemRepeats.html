@@ -100,10 +100,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(TRALResultAnalysis)
-tr_crcfavorable_path &lt;-<span class="st"> &quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_favorable_proteins_CRC.tsv&quot;</span>
-tr_crcunfavorable_path &lt;-<span class="st"> &quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_unfavorable_proteins_CRC.tsv&quot;</span>
-dest_file &lt;-<span class="st">&quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/data/swissprot_human.tsv&quot;</span></code></pre></div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>In Switzerland, colorectal cancer is among the top 3 leading cause for cancer-related mortality <a href="https://www.krebsliga.ch/ueber-krebs/krebsarten/dickdarmkrebs/">1</a>. As the disease showes varying clinical outcomes and therapeutic responses, researchers try through personalized medicine find individually optimal treatments.</p>
@@ -111,40 +107,61 @@ dest_file &lt;-<span class="st">&quot;/home/matteo/polybox/MSc_ACLS/master_thesi
 <p>Some clinical relevant biomarkers are today already used as prognostic and/or therapeutic predictive markers <a href="https://doi.org/10.3892/or.2015.4108">4</a>.</p>
 <div id="colorectal-cancer-on-a-molecular-level" class="section level2">
 <h2>Colorectal Cancer on a Molecular Level</h2>
-<p>Undifferentiated cells, such as colon stem an progenitor cells, are located at the bottom of a crypt in healthy colons. They are able of self-renewal and pluripotency. During their live-cycle of about 14 days, they differentiate in all epithelial colon cell lineages (Paneth, goblet, enterocytes and enteroendocrine) while migrating from the crypt to the top of the villus leading into apoptosis <a href="https://doi.org/10.1073/pnas.0707210104">5</a>. The maintenance of genomic integrity is essential for proper cell differentiation in the colon. If it is lost, it’s easy to accumulate multiple mutations through chromomal instability <a href="https://doi.org/10.1053/j.gastro.2009.12.065">6</a>, microsatellite instability <a href="https://doi.org/10.1053/j.gastro.2009.12.064">7</a>, aberrant DNA methylation <a href="https://doi.org/10.1053/j.gastro.2006.09.018">8</a> and/or DNA repair defects leading to CRC.</p>
+<p>Undifferentiated cells, such as colon stem progenitor cells, are located at the bottom of a crypt in healthy colons. They are able of self-renewal and pluripotency. During their live-cycle of about 14 days, they differentiate in all epithelial colon cell lineages (Paneth, goblet, enterocytes and enteroendocrine) while migrating from the crypt to the top of the villus leading into apoptosis <a href="https://doi.org/10.1073/pnas.0707210104">5</a>. The maintenance of genomic integrity is essential for proper cell differentiation in the colon. If it is lost, it’s easy to accumulate multiple mutations through chromosomal instability <a href="https://doi.org/10.1053/j.gastro.2009.12.065">6</a>, microsatellite instability <a href="https://doi.org/10.1053/j.gastro.2009.12.064">7</a>, aberrant DNA methylation <a href="https://doi.org/10.1053/j.gastro.2006.09.018">8</a> and/or DNA repair defects leading to CRC.</p>
 <p>Several altered molecular signaling pathways are involved in CRC onset, such as Wnt/APC/<span class="math inline">\(\beta\)</span>-catenin, phosphoinositide 3-kinase (PI3K)/AKT/glycogen synthase kinase-3<span class="math inline">\(\beta\)</span> (GSK-3<span class="math inline">\(\beta\)</span>), transforming growth factor-<span class="math inline">\(\beta\)</span> (TGF)-<span class="math inline">\(\beta\)</span>/Smad, NF- κb or mismatch repair genes (MMR) <a href="https://doi.org/10.3892/or.2015.4108">9</a>.</p>
 <div id="wnt-beta-catenin-pathway" class="section level3">
 <h3>Wnt / <span class="math inline">\(\beta\)</span>-catenin pathway</h3>
 <p>Upon secretion of Wnt ligand it bind to Frizzled (Fz) receptors. This results in the inactivation of the multifunctional kinase GSK-3<span class="math inline">\(\beta\)</span> and in the stabilisation of <span class="math inline">\(\beta\)</span>-catenin. <span class="math inline">\(\beta\)</span>-catenin is a E-cadherin cell-cell adhesion protein and transcriptional activator. If it is stabilized, it gets accumulated in the cytoplasm and is translocated into the nucleus. There it interacts with members of the lymphoid enhancer factor (LEF)/t-cell factor (TCF) and activates specific target genes. In absence of Wnt-signal, <span class="math inline">\(\beta\)</span>-catenin is degradated preventing its nuclear translocation. The ubiquination and phosphorylation of <span class="math inline">\(\beta\)</span>-catenin is controlled through casein kinase 1 (CK1) and the APC/Axin/GSK-3<span class="math inline">\(\beta\)</span>-complex.</p>
 <p>Activation of the Wnt pathway through mutations in the APC gene is known to have a leading role in CRC pathogenesis. The protein product of APC is among the key components of <span class="math inline">\(\beta\)</span>-catenin destruction leading to an accumulation of <span class="math inline">\(\beta\)</span>-catenin which is then translocated to the nucleus where it mediates gene transcription through interaction with the LEF/TCF transcription factor family (LEF-1/LEF1, TCF-1/TCF7, TCF-3/TCF7L1, and TCF-4/TCF7L2) <a href="http://www.doi.org/10.4103/1477-3163.78111">10</a>. The same outcome is expected, however, less frequently, through mutations in <span class="math inline">\(\beta\)</span>-catenin and Axin2 <a href="http://www.doi.org/10.1126/science.275.5307.1787">11</a> <a href="https://doi.org/10.1038/79859">12</a></p>
 <p>An increased concentration of <span class="math inline">\(\beta\)</span>-catenin in the cytoplasm promotes cellular proliferation. Nuclear expression of <span class="math inline">\(\beta\)</span>-catenin can be identified immunohistochemically but is not a unique factor for CRC. However, it’s among one of the components of a diagnostic panel <a href="https://doi.org/10.3892/or.2018.6330">13</a>.</p>
+<div id="wnt-singnaling-and-colon-cancer" class="section level4">
+<h4>Wnt-Singnaling and Colon Cancer</h4>
+<p>Wnt-signaling plays a key role in early cell fate decision in embryonic stem cells and is therefore under extensive investigation in cancer research. For example, the Wnt target gene <em>LGR5</em> is a multipotent stem cell marker in crypts. ASCL2, SOX9 and Paneth cell defensins are other examples of Wnt target genes controlling various steps in the differentiation process of stem cells.</p>
+<p>In different cancertypes the <span class="math inline">\(\beta\)</span>-catenin dependent pathway is differentially regulated in normal tissue compared to cancerous tissue and often shows <span class="math inline">\(\beta\)</span>-catenin stabilizing mutations <a href="https://doi.org/10.1101/gad.14.15.1837">14</a> <a href="https://doi.org/10.1126/science.275.5307.1790">15</a> resulting in enhanced Wnt-signaling. Of many upstream and downstream components of <span class="math inline">\(\beta\)</span>-catenin, APC and <span class="math inline">\(\beta\)</span>-catenin are among the ones which show crucial roles in Wnt-signaling and cancer.</p>
+<p>Looking at mouse models with activated Wnt-pathway through <em>APC</em> mutations, revealed that mutations in APC alone are not sufficient for carcinogenic development. The Apc<sup>min/+</sup> mouse models showed non-invasive intestinal tumors <a href="https://dx.doi.org/10.1073%2Fpnas.94.25.13927">16</a>. For unfavorable carcinoma development an increased activation of proto-oncogenetic signaling pathways (i.e. <em>K-ras</em>) and additional mutations in <em>TGFBRII</em>, <em>SMAD4</em>, <em>TP53</em> may be necessary <a href="https://doi.org/10.1016/0092-8674(90)90186-I">17</a>.</p>
+<p>Further, LEF/TCF transcription factors play a crucial role in CRC and may offer therapeutic opportunities <a href="http://www.doi.org/10.4103/1477-3163.78111">18</a>. The recruitment of <span class="math inline">\(\beta\)</span>-catenin to target genes in Wnt-signaling is depending on a <span class="math inline">\(\beta\)</span>-catenin binding domain at the N-terminus of the LEF/TCF transcription factor. At the C-terminus, a sequence-specific DNA binding domain recognize Wnt response elements in target genes. Interestingly, different LEF/TCF loci produce different protein isoforms through alternative splicing and different promotors which influence Wnt-signaling and can lead to cancer development <a href="https://dx.doi.org/10.1101%2Fcshperspect.a007906">19</a> <a href="https://doi.org/10.1038/sj.onc.1210056">20</a>. The expression pattern of LEF/TCF loci varies between normal and cancerous human colon tissue. In healthy colon cells, TCF-1 and TCF-4 are expressed and LEF-1 and TCF-3 are silent. It could be shown in mouse models, that a loss of TCF-4 depeletes stem cells and eliminates cell proliferation in the intestine <a href="https://doi.org/10.1038/1270">21</a>. TCF-1 is suggested to be a feedback repressor of TCF-4 and cooperates with APC to suppress CRC. In cancerous colon cells, TCF-1 and TCF-4 are still expressed (eventhough now as a full-length form) but also LEF-1 is produced which results in a maximal <span class="math inline">\(\beta\)</span>-catenin interaction and hence in oncogenic Wnt-signaling.</p>
+</div>
+<div id="short-tandem-repeats-in-wnt-pathway" class="section level4">
+<h4>Short Tandem Repeats in Wnt-Pathway</h4>
+<p>We could show in <a href="TODO">22</a> that TRs in proteins cluster near the termini and are involved in protein-protein interaction as well as in transcription processes and DNA-binding. As shown in the section above, Wnt-signaling and the development of CRC highly depend on processes predestined for TR involvement. Therefore, we’ll take a closer look at the LEF/TCF transcription factor. Specifically we’ll investigate if we can detect TRs with the state of the art classification method <a href="https://dx.doi.org/10.1093%2Fnar%2Fgks726">23</a> in LEF/TCF transcription factors and describe their role in the Wnt/<span class="math inline">\(\beta\)</span>-catenin pathway with respect to CRC.</p>
+<p>But we not only investigate on LEF/TCF proteins, in fact we analyse proteins containing tandem repeats (TRs) which are expressed by CRC favorable and unfavorable genes <a href="https://www.proteinatlas.org/humanproteome/pathology/colorectal+cancer#colorectal%20cancerunfavourable">24</a> with a focus on the members of the Wnt/<span class="math inline">\(\beta\)</span>-catenin pathway.</p>
+<!-- But we not only investigate on LEF/TCF proteins but also of *TGFBRII*, *SMAD4*, *TP53* [17][Fearon1990]. Furtheron, it is known, that different types of CRC are caused through a variety of different mutations and [Nojadeh et al.][Nojadeh2018] provides a collection of genes related to CRC: *APC*, *K-ras*, *DCC*, *P53*, *COX-2*, *BCL-2*, *MMR*-genes, *MUTYH*, *STK11/LKB1*, *MLH1*, *MSH2*, *MSH6*, *PMS2*.
+
+[Nojadeh2018]: https://dx.doi.org/10.17179%2Fexcli2017-948
+-->
+</div>
+</div>
+</div>
+</div>
+<div id="methods-results" class="section level1">
+<h1>Methods &amp; Results</h1>
+<div id="data-sources-and-collection" class="section level2">
+<h2>Data Sources and Collection</h2>
+<p>All protein sequences were retrieved via the REST API from UniProt/Swiss-Prot Knowledgebase <a href="https://doi.org/10.1093/nar/gky1049">23</a> release 2019_04 for the reviewed entries of the Homo Sapiens proteome (UP000005640).</p>
+<div id="protein-sequence-origin" class="section level3">
+<h3>Protein Sequence Origin</h3>
+<p>The names of CRC favorable and unfavorable genes were downloaded manually (Mai 2019) from the proteinatlas website <a href="https://www.proteinatlas.org/humanproteome/pathology/colorectal+cancer#colorectal%20cancerunfavourable">24</a> and saved as .tsv. The sequences of proteins which are expressed from CRC favorable and unfavorable genes, were retreived from Swiss-Prot by querring all proteins from each gene. Next, we checked the .fasta file for duplicated protein IDs, which requiered manual inspection.</p>
+<p>Analogously, the protein sequences for all proteins which are related to the Wnt-pathway in Swiss-Prot were retrieved and filtered for duplicates.</p>
 </div>
 </div>
 <div id="tandem-repeat-detection-filtering" class="section level2">
 <h2>Tandem Repeat Detection &amp; Filtering</h2>
-<p>In this vignette, we analyse proteins containing tandem repeats (TRs) which are expressed by CRC favorable and unfavorable genes <a href="https://www.proteinatlas.org/humanproteome/pathology/colorectal+cancer#colorectal%20cancerunfavourable">14</a> with a focus on the members of the Wnt/<span class="math inline">\(\beta\)</span>-catenin pathway.</p>
-<ul>
-<li>why wnt-pathway? -&gt; as an example and it’s well investigated, it’s has protein members involved in signaling, protein-protein interaction and finally transcription. All known for having TRs!</li>
-<li>explain more about the favorable and unfavorable genes</li>
-</ul>
-<div id="uniprot-as-data-source" class="section level3">
-<h3>Uniprot as Data Source</h3>
-<p>-swissprot /uniprot -human proteome -mention python script ‘download_multiple_prot_from_gene.py’ -&gt; methods</p>
-</div>
-<div id="tral-the-search-for-trs" class="section level3">
-<h3>TRAL: The search for TRs</h3>
-<p>-the problems of TR detection (Repeats or not repeat? -&gt; schaper; Lina thesis) -mention python script ‘TR_in_multiple_Protein.py’ -&gt; methods</p>
-</div>
+<p>For the detection and filtering of TRs, we applied the open-source python3 Tandem Repeat Annotation Library (TRAL) <a href="https://doi.org/10.1093/bioinformatics/btv306">25</a>. <em>De novo</em> detection of TRs in protein sequences was performed applying the detectors HHrepID, T-REKS, TRUST and XSTREAM followed by a refinement with profile Hidden Markov Models (HMM) implemented through HMMER <a href="https://doi.org/10.1093/bioinformatics/14.9.755">26</a> to capture most of the TR units and their boundaries. The TRs, were then filtered on a significance level of <span class="math inline">\(\alpha = 0.05\)</span> for a Likelyhood Ratio Test under the null hypothesis of random TR sequence evolution, a TR unit divergence of <span class="math inline">\(d_{TR_{units}} &lt; 0.1\)</span> specifying the number of substitution site dating back to the most recent TR unit ancestor, a TR unit length of <span class="math inline">\(l \leq 3\)</span> specifying the number of noninsertion sites of the TR unit and a TR unit number of <span class="math inline">\(n \geq 2.5\)</span> specifying the number of noninsertion sites in the TR-MSA divided by <span class="math inline">\(l\)</span> <a href="https://dx.doi.org/10.1093%2Fnar%2Fgks726">27</a>.</p>
+<p>243 genes associated with unfavorable CRC express 286 proteins where we could <em>de novo</em> detect 617 repeats. After filtering and clustering 100 TRs were left. In CRC favorable genes (352) 403 proteins are expressed, where we could <em>de novo</em> detect 486 repeats with 48 TRs beeing left after filtering and clustering.</p>
+<p>644 proteins were associated in Swiss-Prot with the Wnt-pathway, where we could <em>de novo</em> detect 1353 TRs of which 192 TRs remained after filtering and clustering.</p>
 <div id="processing-tral-results-for-data-mining-in-r" class="section level3">
 <h3>Processing TRAL Results for Data Mining in R</h3>
+<p>The detected TR characteristics and their MSA are stored for each protein in a single .tsv and binary .pickle file. For further analysis, we join the results for all proteins in one file for each group (unfavorable, favorable, Wnt-pathway) containing only proteins which have TRs.</p>
+<p>This TR detection and annotation workflow is implemented in python3 and freely available on [Github]: <a href="https://github.com/matteodelucchi/CRC_TRs.git" class="uri">https://github.com/matteodelucchi/CRC_TRs.git</a> .</p>
 <p>-mention python script ‘concatenate_multiple_TRs.py’ -&gt; methods</p>
 </div>
 </div>
-</div>
-<div id="methods" class="section level1">
-<h1>Methods</h1>
 <div id="data-loading" class="section level2">
 <h2>Data Loading</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(TRALResultAnalysis)
+tr_crcfavorable_path &lt;-<span class="st"> &quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_favorable_proteins_CRC.tsv&quot;</span>
+tr_crcunfavorable_path &lt;-<span class="st"> &quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/inst/extdata/TRs_unfavorable_proteins_CRC.tsv&quot;</span>
+dest_file &lt;-<span class="st">&quot;/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/data/swissprot_human.tsv&quot;</span></code></pre></div>
 <div id="get-an-overview" class="section level3">
 <h3>Get an overview</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tr_fav)
