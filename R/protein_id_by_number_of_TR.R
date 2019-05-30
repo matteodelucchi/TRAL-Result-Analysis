@@ -8,9 +8,8 @@
 protein_id_by_number_of_TR <- function(tr_dataframe, no_TR){
   conttab <- table(tr_dataframe$ID)
   # get ID of the one with == no_TR
-  for(id in 1:nrow(conttab)){
-    if (conttab[[id]]== no_TR){
-      return(as.data.frame(conttab[id], col.names = c("protein id", "Number of TR")))
-    }
-  }
+  df <- as.data.frame(which(conttab == no_TR))
+  df <- cbind(rownames(df))
+  colnames(df) <- c("prot_id")
+  return(df)
 }
