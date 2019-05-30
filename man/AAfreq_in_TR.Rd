@@ -4,7 +4,7 @@
 \alias{AAfreq_in_TR}
 \title{Calculate the Amino Acid Frequency in a given TR-MSA}
 \usage{
-AAfreq_in_TR(tr_all_sp)
+AAfreq_in_TR(tr_all_sp, includeSpaces = FALSE)
 }
 \arguments{
 \item{tr_all_sp}{a data.frame with TR results imported through \code{\link{load_tr_annotations}}. Requires to have the MSA included as column.}

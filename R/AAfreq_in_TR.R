@@ -4,10 +4,15 @@
 #'
 #' @return A data.frame with AA, it's absolute frequency and it's ratios.
 #' @export
-AAfreq_in_TR <- function(tr_all_sp){
+AAfreq_in_TR <- function(tr_all_sp, includeSpaces=FALSE){
   tr_all_sp <- tr_all_sp[, grepl("msa", colnames(tr_all_sp))] # Look for the column, which contains the MSA.
-  aa_freq <- alphabetFrequency(AAStringSet(tr_all_sp)) # in the other column, are the spaces in between the TRs
-  aa_freq <- colSums(aa_freq)
+  aa_freq <- alphabetFrequency(AAStringSet(tr_all_sp)) # in the 'other' column, are the spaces in between the TRs
+
+  if (includeSpaces){
+    aa_freq <- colSums(aa_freq)
+  } else {
+    aa_freq <- colSums(aa_freq[,-ncol(aa_freq)])
+  }
   # aa_freq <-  Reduce(`+`, aa_freq)
 
   df_aafreq  <- as.data.frame(aa_freq)
