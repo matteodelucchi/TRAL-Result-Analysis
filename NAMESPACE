@@ -2,11 +2,13 @@
 
 export(AAfreq_in_TR)
 export(AAfreq_in_prot)
+export(AAratio_vs_Disorderpropensity)
 export(TR_location)
 export(TRdist_in_proteome)
 export(beautifier)
 export(download_prot_sequence)
 export(getTRbyGene)
+export(load_kinome)
 export(load_swissprot)
 export(load_tr_annotations)
 export(protein_id_by_number_of_TR)
