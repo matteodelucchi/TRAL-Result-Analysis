@@ -11,7 +11,7 @@ vignette: >
 ---
 
 ```{r, echo = FALSE, message = FALSE}
-knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(collapse = T, comment = "#>", fig.width=6)
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 set.seed(123)
 ```
@@ -97,7 +97,7 @@ But we not only investigate on LEF/TCF proteins, in fact we analyse proteins con
 
 
 
-# Methods \& Results
+# Methods 
 
 ## Data Sources and Collection
 All protein sequences were retrieved via the REST API from UniProt/Swiss-Prot Knowledgebase [23][uniprot] release 2019_04 for the reviewed entries of the Homo Sapiens proteome (UP000005640).
@@ -117,10 +117,6 @@ For the detection and filtering of TRs, we applied the open-source python3 Tande
 The TRs, were then filtered on a significance level of $\alpha = 0.05$ for a Likelyhood Ratio Test under the null hypothesis of random TR sequence evolution, a TR unit divergence of $d_{TR_{units}} < 0.1$ specifying the number of substitution site dating back to the most recent TR unit ancestor, 
 a TR unit length of $l \leq 3$ specifying the number of noninsertion sites of the TR unit and 
 a TR unit number of $n \geq 2.5$ specifying the number of noninsertion sites in the TR-MSA divided by $l$ [27][Schaper2012].
-
-243 genes associated with unfavorable CRC express 286 proteins where we could *de novo* detect 617 repeats. After filtering and clustering 100 TRs were left. In CRC favorable genes (352) 403 proteins are expressed, where we could *de novo* detect 486 repeats with 48 TRs beeing left after filtering and clustering.
-
-644 proteins were associated in Swiss-Prot with the Wnt-pathway, where we could *de novo* detect 1353 TRs of which 192 TRs remained after filtering and clustering. 
 
 [Schaper2015]: https://doi.org/10.1093/bioinformatics/btv306
 [Eddy1998]: https://doi.org/10.1093/bioinformatics/14.9.755
@@ -148,98 +144,420 @@ library(TRALResultAnalysis)
 tr_crcfavorable_path <- paste0(base_path, "inst/extdata/TRs_favorable_proteins_CRC_sp.tsv")
 tr_crcunfavorable_path <- paste0(base_path, "inst/extdata/TRs_unfavorable_proteins_CRC_sp.tsv")
 tr_wnt_path <- paste0(base_path, "inst/extdata/TRs_Wnt_proteins_CRC_sp.tsv")
-dest_file <- paste0(base_path, "data/swissprot_human.tsv")
+dest_file_sp <- paste0(base_path, "data/swissprot_human.tsv")
+dest_file_kin <- paste0(base_path, "data/swissprot_human_kinome.tsv")
 ```
 
-```{r eval=TRUE, echo=FALSE, message=TRUE, warning=TRUE}
-tr_fav = load_tr_annotations(tr_crcfavorable_path)
-tr_unfav = load_tr_annotations(tr_crcunfavorable_path)
+```{r load data sets, eval=TRUE, echo=FALSE, message=TRUE, warning=TRUE}
+tr_fav <- load_tr_annotations(tr_crcfavorable_path)
+tr_unfav <- load_tr_annotations(tr_crcunfavorable_path)
+tr_wnt <- load_tr_annotations(tr_wnt_path)
 ```
 
-### Get an overview
-
-```{r overview favorable, collapse=TRUE}
-str(tr_fav)
-head(tr_fav)
-```
-
-
-```{r overview unfavorable}
-str(tr_unfav)
-```
-
-### Add more information about the Proteins from SwissProt
+To get deeper insights about the proteins containing TRs, more information is added from SwissProt by a left join
 ```{r Download sp_all if it doesnt exist}
 sp_url <- "https://www.uniprot.org/uniprot/?query=organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20reviewed:yes&format=tab&columns=id,entry%20name,reviewed,protein%20names,genes,organism,length,virus%20hosts,encodedon,database(Pfam),interactor,comment(ABSORPTION),feature(ACTIVE%20SITE),comment(ACTIVITY%20REGULATION),feature(BINDING%20SITE),feature(CALCIUM%20BIND),comment(CATALYTIC%20ACTIVITY),comment(COFACTOR),feature(DNA%20BINDING),ec,comment(FUNCTION),comment(KINETICS),feature(METAL%20BINDING),feature(NP%20BIND),comment(PATHWAY),comment(PH%20DEPENDENCE),comment(REDOX%20POTENTIAL),rhea-id,feature(SITE),comment(TEMPERATURE%20DEPENDENCE)&sort=organism"
 
-if(!file.exists(dest_file)){
-    download.file(sp_url, destfile = dest_file)
+# Download the swissprot file only if it doesn't already exist.
+# Uncomment this, if you want to use the most recent available data!
+if(!file.exists(dest_file_sp)){
+    download.file(sp_url, destfile = dest_file_sp)
 }
+
+sp_all_fav <- load_swissprot(dest_file_sp, tr_fav)
+sp_all_unfav <- load_swissprot(dest_file_sp, tr_unfav)
+sp_all_wnt <- load_swissprot(dest_file_sp, tr_wnt)
+
+tr_unfav_sp <- merge(x = tr_unfav, y = sp_all_unfav, by = "ID", all.x = TRUE)
+tr_fav_sp <- merge(x = tr_fav, y = sp_all_fav, by = "ID", all.x = TRUE)
+tr_wnt_sp <- merge(x = tr_wnt, y = sp_all_wnt, by = "ID", all.x = TRUE)
 ```
 
-```{r load sp_all}
-sp_all_fav <- load_swissprot(dest_file, tr_fav)
-sp_all_unfav <- load_swissprot(dest_file, tr_unfav)
-```
-Add meta_data from sp_all to tr_unfav -> Do a left join.
 
-```{r add meta data}
-tr_unfav_sp = merge(x = tr_unfav, y = sp_all_unfav, by = "ID", all.x = TRUE)
-tr_fav_sp = merge(x = tr_fav, y = sp_all_fav, by = "ID", all.x = TRUE)
+# Results \& Discussion
+
+In 243 genes associated with unfavorable CRC expressing 286 proteins we could *de novo* detect 617  TRs of which after filtering and clustering 100 TRs remained. In CRC favorable genes (352) 403 proteins are expressed, where we could *de novo* detect 486 TRs with 48 TRs beeing left after filtering and clustering.
+
+Additionally, 644 proteins were associated in Swiss-Prot with the Wnt-pathway, where we could *de novo* detect 1353 TRs of which 192 TRs remained after filtering and clustering. 
+
+## More TRs Were Detected in Proteins Associated With Unfavorable CRC Prognosis
+```{r fraction of TR containing proteins}
+# CRC favorable
+length(unique(tr_fav_sp$ID))/403 # through unique() we ensure to count those proteins with >1 TR only once.
+
+# CRC unfavorable
+length(unique(tr_unfav_sp$ID))/286 
+
+# Wnt pathway
+length(unique(tr_wnt_sp$ID))
+length(unique(tr_wnt_sp$ID))/644 
 ```
+Of all proteins expressed by genes associated for beeing favorable or unfavorable for CRC, 9.4% and 22.4% contain at least one TR respectively. Analogously, we could detect TRs in 138 (21.4%) of the 644 proteins involved in the Human Wnt-pathway.
+
+## Homo-TR Cluster Towards the N-Terminus
+TRs generally cluster to the flanks of proteins with a tendency of domain-TRs to cluster near the N-terminus [TODO][swissrepeat].
+```{r warning=FALSE}
+TR_location(
+  rbind(tr_fav_sp, tr_unfav_sp),
+  byTRtype = TRUE)
+```
+
+In proteins expressed from CRC favorable and unfavorable genes, homo-TRs show a tendency for N-terminal location. 
+Many of the homo-TR fall in the region allocated to signal sequences which tags the proteins for extracellular translocation through the cell membrane.
+```{r warning=FALSE}
+TR_location(tr_fav_sp, byTRtype = TRUE)
+TR_location(tr_unfav_sp, byTRtype = TRUE)
+```
+
+Looking seperately at CRC favorable and unfavorable proteins it can be observed that favorable CRC proteins have a greater tendecy for N-terminal location of their homo-TRs. Which allows to hypothesize, that favorable CRC proteins have a signal sequence and may play extracellular roles.
+```{r warning=FALSE}
+TR_location(
+   rbind(tr_fav_sp, tr_unfav_sp, tr_wnt_sp),
+   byTRtype = TRUE)
+```
+
+The small dataset doesn't allow to draw any final conclusions, even if we combine all groups toghether. 
+
+It could be shown [TODO][Labaj2010] that N-terminal signal peptides are rich in Leucine residues. 
+```{r}
+# combine all TR from the three groups
+tr_all <- rbind(tr_fav, tr_unfav, tr_wnt)
+
+AAfreq_all <- AAfreq_in_TR(tr_all) 
+AAfreq_all[base::order(AAfreq_all$aa_ratio, decreasing = TRUE),]
+
+AAfreq_all_homo <- AAfreq_in_TR(tr_all[which(tr_all$l_type == "homo"),]) 
+AAfreq_all_homo[base::order(AAfreq_all_homo$aa_ratio, decreasing = TRUE),]
+
+AAfreq_all[which(AAfreq_all$aa == "L"),]
+AAfreq_all_homo[which(AAfreq_all_homo$aa == "L"),]
+```
+We combine all datasets and count the amino acid frequency and compare it to the amino acid frequency in homo-TRs which doesn't show much difference for Lysine. 
+However, we can see, that Alanine is most frequent (17.5%) followed by Serine (15.6%) in CRC and Wnt-/$\beta$-catenin pathway associated proteins.
+
+```{r TODO is this necessary}
+# (AAfreq_fav <- AAfreq_in_TR(tr_fav))
+# (AAfreq_unfav <- AAfreq_in_TR(tr_unfav))
+# cor.test(AAfreq_fav$aa_ratio, AAfreq_unfav$aa_ratio, method = "spearman")
+```
+
 
 ```{r}
-str(tr_unfav_sp)
+AAratio_vs_Disorderpropensity(tr_all, plot_title = "CRC & Wnt-Pathway Associated Proteins")
 ```
 
-## Get overview
-Let's see how many CRC favorable TRs were predicted
+Plotting the amino acid frequency ratio of TRs in CRC and Wnt-/$\beta$-catenin pathway associated proteins against the amino acid disorderpropensity we can see that almost only amino acids with high disorder propensity are part of TR in CRC and Wnt-/$\beta$-catenin pathway associated proteins. With exception of Lysine and Histidine.
 ```{r}
-length(tr_fav$ID)
+AAratio_vs_Disorderpropensity(sp_overall = TRUE)
 ```
 
-These TRs were predicted in 
-```{r}
-length(unique(tr_fav$ID))
-```
-different proteins.
-We can see, that there are more TRs found than we have proteins with TRs.
-Therefore, there must be proteins, which contain more $\geq 1$ TR. 
+This trend is consistent with the overall amino acid frequency of all known proteins - amino acids with higher disorderpropensity are appear in TRs significantly more frequent.
 
-```{r}
+[Labaj2010]: https://doi.org/10.1111/j.1742-4658.2010.07720.x
+
+
+## Only Few Wnt-pathway Proteins Are Associated With CRC.
+Proteins with TRs from the Wnt-pathway seem to be distinct from the proteins retrieved by genes. 
+```{r fav in wnt-pathway}
+# CRC favorable proteins in Wnt pathway
+tr_fav_sp$protein_name[which(tr_fav_sp$ID %in% tr_wnt_sp$ID)]
+```
+3 Proteins which are associated with favorable CRC prognosis are invovled in the Wnt-pathway and
+```{r unfav in wnt-pathway}
+# CRC unfavorable proteins in Wnt pathway
+tr_unfav_sp$protein_name[which(tr_unfav_sp$ID %in% tr_wnt_sp$ID)]
+```
+5 with unfavorable prognosis.
+
+## Nucleic Acid Binding Proteins Show Many Repeat Regions
+The number of detected TRs exceeds the number of analysed proteins which suggests that there are proteins with more than one TR-region.
+```{r many TRs}
+# CRC favorable proteins
 table(table(tr_fav$ID))
+
+# CRC unfavorable proteins
+table(table(tr_unfav_sp$ID))
+
+# Wnt-pathway proteins
+table(table(tr_wnt_sp$ID))
 ```
-From the contingency table above, we see, that most proteins (40) have one single TR. Whereas 9 proteins contain 2 TRs. There are one which contains 3 TRs and one with 6 TRs.
+Nevertheless, most of the proteins, contain only one TR-region we detect up to 11 different TR-regions i.e. in some CRC unfavorable associated proteins.
 
-Let's inspect them in more detail in the next section.
+In proteins associated with unfavorable CRC prognosis we found in general more proteins with $\geq 4$ TRs comüpared to the group of unfavorable or Wnt-pathway proteins.
+```{r multiple TR regions in unfavorable prots I}
+protein_id_by_number_of_TR(tr_unfav_sp, 11)
+eleven_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_unfav_sp, 11)[[1]]),]
+unique(eleven_TRs$protein_name)
+unique(eleven_TRs$prot_function)
+```
+For example the splicing factor protein SFR19_HUMAN (ID: Q9H7N4) shows 11 TR-regions. 
 
-### Dig Deep Into the Proteins with Multiple TRs
+```{r multiple TR regions in unfavorable prots II}
+protein_id_by_number_of_TR(tr_unfav_sp, 5)
+five_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_unfav_sp, 5)[[1]]),]
+unique(five_TRs$protein_name)
+unique(five_TRs$prot_function)
+```
+And Forkhead-related transcription factor 3 (ID: Q12948) appears to have 5 TR-regions which is promoting cell growth inhibition and is involved in cell migration.
+
+## Pathogenic Tandem Repeat Types Prevail
 ```{r}
-protein_id_by_number_of_TR(tr_fav, 6)
-protein_id_by_number_of_TR(tr_fav, 3)
+summary(tr_fav_sp$l_effective)
+unique(tr_fav_sp$l_type)
 ```
 
-We next filter all TRs from the protein "Q9UGU0" which showed 6 TRs. 
 ```{r}
-Q9UGU0 <- tr_fav_sp[which(tr_fav_sp$ID == "Q9UGU0"),]
+summary(tr_unfav_sp$l_effective)
+unique(tr_unfav_sp$l_type)
 ```
 
-To get an idea about the protein's function:
 ```{r}
-Q9UGU0$prot_function[1]
+summary(tr_wnt_sp$l_effective)
+unique(tr_wnt_sp$l_type)
 ```
+In all three groups of proteins we could only detect homo- and micro-TRs which are known to be disease causing.
 
-The TRs are of mostly homo TRs and one micro TRs.
 ```{r}
-Q9UGU0$l_type
+summary(tr_fav_sp$n_effective)
+summary(tr_unfav_sp$n_effective)
+summary(tr_wnt_sp$n_effective)
 ```
 
-To explore the location of the TR in this protein, we plot the relative position of the center of the TR.
 ```{r}
-TR_location(tr_all_sp = Q9UGU0, byTRtype = FALSE)
+summary(tr_fav_sp$total_repeat_length)
+summary(tr_unfav_sp$total_repeat_length)
+summary(tr_wnt_sp$total_repeat_length)
 ```
+All TR-regions have a mean number of repeat units of 7 units per repeat with a mean TR-region length of 8 amino acids in a range of 6 up to 27, 20 and 42 residues for CRC favorable, unfavorable and Wnt-pathway associated proteins respectively.
+
+```{r}
+tr_wnt_sp$protein_name[which(tr_wnt_sp$total_repeat_length > 15)]
+unique(tr_wnt_sp$prot_function[which(tr_wnt_sp$total_repeat_length > 15)])
+```
+Wnt-pathway associated proteins with long TR-regions are generally involved in transcriptional regulation. But also others, such as the WD repeat-containing protein 26 which negatively regulated the Wnt-pathway contains long repeat regions
+
+```{r}
+tr_fav_sp$protein_name[which(tr_fav_sp$total_repeat_length > 15)]
+unique(tr_fav_sp$prot_function[which(tr_fav_sp$total_repeat_length > 15)])
+```
+Similarly proteins associated with favorable prognosis of CRC containing long TR-regions show beside transcriptional regulatory functions also roles in regulation of alternative splicing.
+
+```{r}
+tr_unfav_sp$protein_name[which(tr_unfav_sp$total_repeat_length > 15)]
+unique(tr_unfav_sp$prot_function[which(tr_unfav_sp$total_repeat_length > 15)])
+```
+Interestingly, the Numb-like protein (ID: Q9Y6R0, Numbl) contains a long (20 AA) poly-Q homo-TR. Those kind of TR are prone site for diseases caused by tandem repeat disorders (TRD). Numbl is further a negative regulator of NF-$\kappa$-B pathway. Negative regulation of NF-$\kappa$-B pathway is known as a source of CRC through interaction with Wnt/$\beta$-catenin pathway. One possible interaction leading to CRC is through NF-$\kappa$-B upregulated Lef1-expression which enhances transcriptional activity of TCF/LEF [REF][MA2016].
+
+[Ma2016]: https://dx.doi.org/10.3389%2Ffimmu.2016.00378
 
 
+## Binding of LEF/TCF to $\beta$-Catenin is Mediated Through Tandem Repeats
+```{r}
+sel_var <- c("ID", "begin", "msa_original", "repeat_region_length", "l_type", "prot_name", "protein_name", "gene_names", "prot_function")
+tr_wnt_sp[which(tr_wnt_sp$ID == "Q9UJU2"),sel_var]
+```
+In LEF1 we found a significant poly-G TR-region at the N-terminal end which falls in the binding region with $\beta$-catenin1 (positions 1-66 based on similarity [TODO][LEF1-Uniprot]). *LEF1* has been identified as beeing only expressed in CRC cells but not in healthy colon tissue. However, it could be detected that different splicing variants in alteri result in the loss of the $\beta$-catenin binding site which acts as a transcriptional repressor often expressed in healthy colon epithelial cells [TODO][Hovanes2001].
+
+```{r}
+tr_wnt_sp[which(tr_wnt_sp$ID == "Q9HCS4"),sel_var]
+tr_wnt_sp[which(tr_wnt_sp$ID == "P36402"),sel_var]
+```
+A similar motif could be detected in TCF-3 and TCF-7 which have also a poly-G TR-region near the N-terminus offering a presumable binding region for $\beta$-catenin1 [TODO][Barker1999]. Through this binding region, TCF-3 can mediate $\beta$-catenin degradation [TODO][Lee2001]. 
+
+[LEF1-Uniprot]: https://www.uniprot.org/uniprot/Q9UJU2#family_and_domains
+[Hovanes2001]: https://www.nature.com/articles/ng0501-53
+[Barker1999]: https://doi.org/10.1016/S0065-230X(08)60783-6  
+<!-- https://doi.org/10.1002/ijc.24802 --> 
+[Lee2001]: https://dx.doi.org/10.1083%2Fjcb.200102074
+
+## $\beta$-Catenin Destruction Complex Not Only Relies On Tandem Repeats
+The $\beta$-catenin destruction complex comprises different proteins, such as adenomatosis polyposis coli (APC), Axin, protein phosphatase (PP2A), glycogen synthase kinase 3 (GSK3) and casein kinase 1$\alpha$ (CK1$\alpha$).
+
+### APC $\beta$-Catenin Binding Domain Contains Tandem Repeats
+```{r}
+tr_wnt_sp[grepl("APC", tr_wnt_sp$prot_name),sel_var]
+```
+The polyS homo-TR region in the APC protein sequence was the only repeat region which could be detected, eventhough there are structurally verified armadillo repeats near the N-terminal end of the protein sequence. 
+However, in the very similar APC-like protein, we could detect a micro-TR in a region associated with $\beta$-catenin binding necessary for its degradation [TODO][Nakagawa1998].
+
+
+[Nakagawa1998]: http://cancerres.aacrjournals.org/content/58/22/5176
+
+### GSK
+```{r}
+tr_wnt_sp[grepl("GSK", tr_wnt_sp$prot_name),sel_var]
+```
+In GSK3A and GSK3B we could detect a polyG homo-TR at N-terminal proximity and a micro TR near the C-terminus respectively. 
+
+### Casein Kinase I
+```{r}
+tr_wnt_sp[grepl("KC", tr_wnt_sp$prot_name),sel_var]
+tr_fav_sp[grepl("KC", tr_fav_sp$prot_name),sel_var]
+tr_unfav_sp[grepl("KC", tr_unfav_sp$prot_name),sel_var]
+```
+With the applied filtering approach, no TRs were found in any Casein kinase I isoform epsilon. Neither in the Wnt-pathway protein set nor in the CRC favorable or unfavorable set.
+
+[TODO: Just a thought. But as GSK has no relevant TRs either, this might give a hint for rareness of TRs in Kinases in general?]
+
+### Axin Offers A Prone Site For Tandem Repeat Disorder
+```{r}
+tr_wnt_sp[grepl("AXIN", tr_wnt_sp$prot_name),sel_var]
+```
+Mutations in AXIN1 and AXIN2 are involved with CRC pathogenesis [TODO][Liu2000]. In Axin-2 overlapping with the compositionally biased histidine region, a polyH homo-TR could be detected which falls in the region interacting with armadillo repeats in $\beta$-catenin.
+
+TRD in this region may destabilize the binding of $\beta$-catenin to the protein-complex with Axin-2 resulting in a accumulation of $\beta$-catenin followed by a transcriptional activation of the Wnt/$\beta$-catenin target genes which is known to be a leading cause CRC.
+
+[Liu2000]: http://dx.doi.org/10.1038/79859
+
+## Dishevelled Proteins
+```{r}
+tr_wnt_sp[grepl("DVL", tr_wnt_sp$prot_name),sel_var]
+```
+Dishevelled proteins bind to the C-terminus of frizzeled proteins promoting their internalisation upon Wnt-signaling [TODO][Zang2009].
+DVL-2 shows a polyP homo-TR near it's C-terminal end which could to our knowledge not be brought in contribution with Frizzled-binding.
+
+FOXK1 and FOXK2 are positively transcriptionally regulating the Wnt-pathway and interact with DVL proteins. FOXK1/2 are reported to be highly expressed in CRC and correlate with nuclear localisation of DVL proteins [TODO][Wang2015].
+```{r}
+tr_wnt_sp[grepl("FOX", tr_wnt_sp$prot_name),sel_var]
+tr_fav_sp[grepl("FOX", tr_fav_sp$prot_name),sel_var]
+tr_unfav_sp[grepl("FOX", tr_unfav_sp$prot_name),sel_var]
+```
+In each protein FOXK1 and FOXK2 we could detect two TR-regions: A polyA homo-TR near the N-terminus and a micro-TR near the C-terminus. In FOXK1 the polyA homo-TR falls in the interaction domain with SIN3A. FOXK1 toghether with SIN3A cooperatively regulate cell cycle progression [TODO][Yang2002]. 
+
+Forkhead box protein C1 (FOXC1) in contrast is part of the CRC unfavorable associated proteins. FOXC1 acts as a transcriptional activator where the crucial domains are located at the C- and N-termini. Most of the detected TRs fall exactely in these regions responsible for transcriptional activation [TODO][Berry2002]. The C-terminal end 366-553 is the proposed binding region of a degradation factor [TODO][Berry2006] and the region 47-553 could be shown to bind to PITX2 [TODO][Berry2006.2] supporting the idea of TRs acting as keyplayers in protein-protein interactions. To our knowledge, no structural interaction data is available to further prove this hypothesis.
+
+Interestingly, in both FOXK and FOXC proteins the forkhead box didn't show any TRs - they are rather clustered around the forkhead box.
+
+
+```{r}
+tr_wnt_sp[which(tr_wnt_sp$ID == "O00358"),sel_var]
+tr_unfav_sp[which(tr_unfav_sp$ID == "P10070"),sel_var]
+```
+*FOXE1* is one of the prognostic colorectal cancer genes and can indirectly activate the Wnt/$\beta$-catenin pathway [TODO][Ma2019] and shows a central poly-A TR-region.
+
+
+TODO: is this the region where it interacts with Frizzled? Look at Frizzled where it interacts with what
+
+[Wang2015]: https://doi.org/10.1016/j.devcel.2015.01.031
+[Yang2002]: http://dx.doi.org/10.1016/S0092-8674(02)00810-3 
+[Ma2019]: https://doi.org/10.1002/jcp.28399
+[Berry2002]:  https://doi.org/10.1074/jbc.M110266200
+[Berry2006]: https://doi.org/10.1074/jbc.M513629200
+[Berry2006.2]: https://doi.org/10.1093/hmg/ddl008
+
+## Wnt Receptor Complex
+The Wnt Receptor Complex is made up of Wnt, Frizzled (Fz), G-protein coupled receptors (GPCRs), lipoprotein receptor-related protein (LRP), receptor tyrosine kinase (RTK) and ROR.
+
+### Frizzled
+```{r}
+tr_wnt_sp[grepl("FZ", tr_wnt_sp$prot_name),sel_var]
+```
+Frizzled membran proteins are receptors of Wnt activating Dishevelled proteins.
+In FZD5 and FZD8 we could detect polyL and polyG homo-TR near the C- and N-terminus respectively. 
+The polyL TR in FZD5 is near but not within the Frizzled domain and on the opposite terminus from the DVL binding site.
+In FZD8, the polyG TR-region is extracellular forming a helical structure which is in topological proximity to the Wnt binding site.
+
+### WNT
+```{r}
+tr_wnt_sp[grepl("WNT", tr_wnt_sp$prot_name),sel_var]
+```
+In WNT2B and WNT6 polyL homo-TRs are located near the N-terminus in a signal peptide domain which is the important part of interaction with signal recognition particles in the process of nuclear translocation.
+
+### LRP
+```{r}
+tr_wnt_sp[grepl("LRP", tr_wnt_sp$prot_name),sel_var]
+```
+LRP5 has a polyL homo-TR in its signal peptide at the N-terminus and a polyS homo-TR near the C-terminus. The later is also found at a similar location in LRP6. To our knowledge there is not much known today about those regions at the C-terminus.
+In LRP1 the N-terminal polyL homo-TR is located in a helical transmembran peptide in a possible Low-density lipoprotein receptor region. In the canonical Wnt-pathway only LRP5 and LRP6 are reported to be involved.
+
+[Zang2009]: http://dx.doi.org/10.1038/nchembio.152
+
+### Receptor Tyrosine Kinase \& Tyrosine-protein kinase transmembrane receptor
+```{r}
+tr_wnt_sp[grepl("PTK", tr_wnt_sp$prot_name),sel_var]
+tr_wnt_sp[grepl("ROR", tr_wnt_sp$prot_name),sel_var]
+```
+The inactive tyrosine-protein kinase 7 (PTK7) and Tyrosine-protein kinase transmembrane receptor (ROR2) are mainly involved in the $\beta$-catenin independent planar cell polarity Wnt-pathway. PTK7 plays an important role in cancer cell invasion [TODO][Golubkov2010].
+ROR2 is shown to suppress the Wnt/$\beta$-catenin signal and is therefore also an interesting player in the fight against cancer [TODO][Bainbridge2014].
+We couldn't detect in both of those Kinase any TRs as we couldn't in CKI and GSK3 neither. It is thus possible to hypothesise that protein kinases tend to have few TR in general which should be supported by more data though.
+
+[Golubkov2010]: http://dx.doi.org/10.1074/jbc.M110.165159
+[Bainbridge2014]: https://dx.doi.org/10.1371/journal.pone.0102695
+
+## Kinases Show No Tandem Repeat Depletion
+As we couldn't detect any TRs in certain protein kinases of the Wnt/$\beta$-catenin pathway, we're interested if protein kinases generally lack TRs.
+We therefore filter the Human Proteome for protein kinases (enzyme commission numbers 2.7.10, 2.7.11, 2.7.12, 2.7.13, 2.7.14, 2.7.99).
+```{r}
+# url to UniProt/Swiss-Prot querying enzyme commissions for protein kinases
+url_kin <- "https://www.uniprot.org/uniprot/?query=ec:2.7.10.-%20OR%20ec:2.7.11.-%20OR%20ec:2.7.12.-%20OR%20ec:2.7.13.-%20OR%20ec:2.7.14.-%20OR%20ec:2.7.99.-&format=fasta&sort=score&fil=proteome:UP000005640%20AND%20reviewed:yes%20AND%20organism:%22Homo%20sapiens%20(Human)%20[9606]%22"
+sp_kinIDs <- load_kinome(url = url_kin, path = dest_file_kin, OnlyIDs = TRUE)
+
+# No. of protein kinases in Human Proteome
+length(sp_kinIDs)
+length(sp_kinIDs) / nrow(sp_all_fav)
+# No. protein kinases in Wnt-Pathway
+sum(sp_kinIDs %in% tr_wnt$ID)
+sum(sp_kinIDs %in% tr_wnt$ID) / nrow(tr_wnt)
+# No. protein kinases in CRC favorable proteins
+sum(sp_kinIDs %in% tr_fav$ID)
+# No. protein kinases in CRC unfavorable proteins
+sum(sp_kinIDs %in% tr_unfav$ID)
+
+(sum(sp_kinIDs %in% tr_fav$ID) + sum(sp_kinIDs %in% tr_unfav$ID))/(nrow(tr_fav)+nrow(tr_unfav))
+```
+Of the 483 protein kinases from the Human proteome 11 have TRs and are associated with the Wnt-pathway and 7 have TRs and are CRC related proteins.
+To put this in relations, of the whole human proteome 2.4% are protein kinases. From proteins with TRs, 4.7% belong to the enzyme class of protein kinases in CRC associated proteins and 5.7% in Wnt-pathway proteins. 
+```{r}
+dest_file_kinext <- "/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/data/swissprot_human_extkinome.tsv"
+url_extkin <- "https://www.uniprot.org/uniprot/?query=ec:2.7.-.-%20AND%20reviewed:yes%20AND%20organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20AND%20proteome:up000005640&format=fasta&sort=score"
+sp_extkinIDS <- load_kinome(url = url_extkin, path = dest_file_kinext, OnlyIDs = TRUE)
+# No. of protein kinases in Human Proteome
+length(sp_extkinIDS)
+length(sp_extkinIDS) / nrow(sp_all_fav)
+# No. protein kinases in Wnt-Pathway
+sum(sp_extkinIDS %in% tr_wnt$ID)
+sum(sp_extkinIDS %in% tr_wnt$ID) / nrow(tr_wnt)
+# No. protein kinases in CRC favorable proteins
+sum(sp_extkinIDS %in% tr_fav$ID)
+# No. protein kinases in CRC unfavorable proteins
+sum(sp_extkinIDS %in% tr_unfav$ID)
+
+(sum(sp_extkinIDS %in% tr_fav$ID) + sum(sp_extkinIDS %in% tr_unfav$ID))/(nrow(tr_fav)+nrow(tr_unfav))
+```
+These findings don't support our hypothesis and even considering all phosphorous transfering enzymes (EC 2.7.-.-) doesn't show a depletion of TRs.
+
+
+# Conclusion
+- Often TR-region in lox complexity regions / yet not characterized regions of the protein (see Forkhead. Where the TR-regions encompass the main functional region; OR Kinase. Do they never have TRs?)
+
+- Extracellular or membranlocated proteins show a tendency for homo-TRs in their signal peptide sequence (see Wnt and LRP).
+
+- critically reflect the results, as the sequences are often processed such that different forms of the proteins are available.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# NOTES \& THOUGHTS
 ## Filter the top 20 CRC genes:
 ```{r}
 top20_unfav_genes <- c("LRCH4", "POFUT2", "CLK3", "EGFL7", "DPP7", "HSH2D", "ASB6", "SPAG4", "EXOC3L4", "HSPA1A", "PAQR6", "FAM69B", "CRACR2B", "ARHGAP4", "NPDC1", "DAPK1", "CNPY3", "ARL8A", "INAFM1", "RHBDD2")
@@ -276,49 +594,49 @@ TODO: Add what we want here
 
 Start with determining the Amino Acid distribution of the TR Sequence
 ```{r}
-(aa_freq_TR <- AAfreq_in_TR(Q9UGU0))
+# (aa_freq_TR <- AAfreq_in_TR(Q9UGU0))
 ```
 
 We sort them according their disorderpropensity. You find more information in Uversky et al. ( http://www.tandfonline.com/doi/full/10.4161/idp.24684).
 ```{r}
-# Not mentioned in Uversky's paper: "B", "O", "U", "Z", "X". These guys might need to fit in with the rest (if possible, as some of them represent multiple aa.)
-aa_order_promoting_to_disorder_promoting = c("C", "W", "I", "Y", "F", "L", "H", "V", "N", "M", "R", "T", "D", "G", "A", "K", "Q", "S", "E", "P", "B", "O", "U", "Z", "X")
-# Sort AA according to their disorder promoting potential
-aa_freq_TR <- aa_freq_TR[match(aa_order_promoting_to_disorder_promoting, aa_freq_TR$aa),]
-colnames(aa_freq_TR) <- c("aa_freq_tr", "aa", "aa_ratio_tr")
+# # Not mentioned in Uversky's paper: "B", "O", "U", "Z", "X". These guys might need to fit in with the rest (if possible, as some of them represent multiple aa.)
+# aa_order_promoting_to_disorder_promoting = c("C", "W", "I", "Y", "F", "L", "H", "V", "N", "M", "R", "T", "D", "G", "A", "K", "Q", "S", "E", "P", "B", "O", "U", "Z", "X")
+# # Sort AA according to their disorder promoting potential
+# aa_freq_TR <- aa_freq_TR[match(aa_order_promoting_to_disorder_promoting, aa_freq_TR$aa),]
+# colnames(aa_freq_TR) <- c("aa_freq_tr", "aa", "aa_ratio_tr")
 ```
 
 
 We then load the dataset with information about the amino acid frequency of all swissprot proteins and the disorderpropensity of each amino acid. This data is included in the package and is generated through the script "/data-raw/create_AAfreqSP.R". Rerunning this script, updates the amino acid frequency of swissprot proteins.
 ```{r}
-data("AAfreqSP")
+# data("AAfreqSP")
 ```
 
 
 We can now download the whole protein sequence and compare the Amino acid frequency compared to that of the overall protein
 ```{r}
-prot_seq <- download_prot_sequence("Q9UGU0")
-aa_freq_prot <- AAfreq_in_prot(prot_seq)
-(aa_freq_prot <- aa_freq_prot[match(aa_order_promoting_to_disorder_promoting, aa_freq_prot$aa),])
-colnames(aa_freq_prot) <- c("aa_freq_sp", "aa", "aa_ratio_sp")
+# prot_seq <- download_prot_sequence("Q9UGU0")
+# aa_freq_prot <- AAfreq_in_prot(prot_seq)
+# (aa_freq_prot <- aa_freq_prot[match(aa_order_promoting_to_disorder_promoting, aa_freq_prot$aa),])
+# colnames(aa_freq_prot) <- c("aa_freq_sp", "aa", "aa_ratio_sp")
 ```
 
 Plot our amino acid abundancy in the TRs of this protein against the amino acid abundancy in the whole protein, we see that AA with medium to high disorderpropensity fall in the TR sequence.
 ```{r}
-# we combine the datasets
-aa_freq_prot <- aa_freq_prot[1:20,]
-disorderpropensity <- AAfreqSP$disorderpropensity
-df <- cbind(aa_freq_TR[1:20,], disorderpropensity, aa_freq_prot)
-df <- df[ , !(names(df) %in% c("aa"))]
-
-p <- ggplot(df, aes(x= aa_ratio_sp, y = aa_ratio_tr, size = disorderpropensity))+
-  geom_point()+
-  labs(x= "AA Background Frequency",
-       y = "AA Frequency in TRs")+
-  guides(size=guide_legend(title="Disorderpropensity"))+
-  theme_minimal()
-p <- beautifier(p, x.axis.text.angle = 0)
-p
+# # we combine the datasets
+# aa_freq_prot <- aa_freq_prot[1:20,]
+# disorderpropensity <- AAfreqSP$disorderpropensity
+# df <- cbind(aa_freq_TR[1:20,], disorderpropensity, aa_freq_prot)
+# df <- df[ , !(names(df) %in% c("aa"))]
+# 
+# p <- ggplot(df, aes(x= aa_ratio_sp, y = aa_ratio_tr, size = disorderpropensity))+
+#   geom_point()+
+#   labs(x= "AA Background Frequency",
+#        y = "AA Frequency in TRs")+
+#   guides(size=guide_legend(title="Disorderpropensity"))+
+#   theme_minimal()
+# p <- beautifier(p, x.axis.text.angle = 0)
+# p
 ```
 
 
