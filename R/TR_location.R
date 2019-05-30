@@ -13,8 +13,12 @@
 #'
 #' @return ggplot object
 #' @export
-TR_location <- function(tr_all_sp, byTRtype = TRUE, byProt = TRUE, paperfigure = FALSE){
+TR_location <- function(tr_all_sp, byTRtype = FALSE, byProt = TRUE, paperfigure = FALSE){
   if (byTRtype){
+    # Only show one of the plot per time
+    # TODO: implement showing both at the same time.
+    byProt = FALSE
+
     # renormalized version accounting for true length
     tr_all_sp$repeat_type_bin <- with(tr_all_sp, cut(l_effective, breaks = c(0,1,3, 15, 2000), dig.lab = 12))
 
@@ -53,7 +57,7 @@ TR_location <- function(tr_all_sp, byTRtype = TRUE, byProt = TRUE, paperfigure =
     if (paperfigure){
       p1 <- paper.figure(p1, x.axis.text.angle = 0)
     }
-    returnplot <- c(p1)
+    returnplot <- p1
   }
 
   if (byProt){

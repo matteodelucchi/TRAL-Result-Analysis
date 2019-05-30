@@ -4,7 +4,7 @@
 \alias{TR_location}
 \title{Display TR center location}
 \usage{
-TR_location(tr_all_sp, byTRtype = TRUE, byProt = TRUE,
+TR_location(tr_all_sp, byTRtype = FALSE, byProt = TRUE,
   paperfigure = FALSE)
 }
 \arguments{
