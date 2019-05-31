@@ -11,9 +11,9 @@ base_path <- "/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/"
 
 ## ----Housekeeping, message=FALSE, warning=FALSE, collapse=TRUE-----------
 library(TRALResultAnalysis)
-tr_crcfavorable_path <- paste0(base_path, "inst/extdata/TRs_favorable_proteins_CRC_sp.tsv")
-tr_crcunfavorable_path <- paste0(base_path, "inst/extdata/TRs_unfavorable_proteins_CRC_sp.tsv")
-tr_wnt_path <- paste0(base_path, "inst/extdata/TRs_Wnt_proteins_CRC_sp.tsv")
+tr_crcfavorable_path <- paste0(base_path, "inst/extdata/TRs_favorable_proteins_CRC_sp_l100.tsv")
+tr_crcunfavorable_path <- paste0(base_path, "inst/extdata/TRs_unfavorable_proteins_CRC_sp_l100.tsv")
+tr_wnt_path <- paste0(base_path, "inst/extdata/TRs_Wnt_proteins_CRC_sp_l100.tsv")
 dest_file_sp <- paste0(base_path, "data/swissprot_human.tsv")
 dest_file_kin <- paste0(base_path, "data/swissprot_human_kinome.tsv")
 
@@ -109,7 +109,10 @@ unique(eleven_TRs$prot_function)
 
 ## ----multiple TR regions in unfavorable prots II-------------------------
 protein_id_by_number_of_TR(tr_unfav_sp, 5)
-five_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_unfav_sp, 5)[[1]]),]
+five_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_unfav_sp, 5)[1]),]
+unique(five_TRs$protein_name)
+unique(five_TRs$prot_function)
+five_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_unfav_sp, 5)[2]),]
 unique(five_TRs$protein_name)
 unique(five_TRs$prot_function)
 
@@ -134,6 +137,9 @@ summary(tr_wnt_sp$n_effective)
 summary(tr_fav_sp$total_repeat_length)
 summary(tr_unfav_sp$total_repeat_length)
 summary(tr_wnt_sp$total_repeat_length)
+
+## ------------------------------------------------------------------------
+tr_wnt_sp[which(tr_wnt_sp$total_repeat_length == max(tr_wnt_sp$total_repeat_length)),]
 
 ## ------------------------------------------------------------------------
 tr_wnt_sp$protein_name[which(tr_wnt_sp$total_repeat_length > 15)]
