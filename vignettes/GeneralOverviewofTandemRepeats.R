@@ -59,11 +59,6 @@ TR_location(
 TR_location(tr_fav_sp, byTRtype = TRUE)
 TR_location(tr_unfav_sp, byTRtype = TRUE)
 
-## ----warning=FALSE-------------------------------------------------------
-TR_location(
-   rbind(tr_fav_sp, tr_unfav_sp, tr_wnt_sp),
-   byTRtype = TRUE)
-
 ## ------------------------------------------------------------------------
 # combine all TR from the three groups
 tr_all <- rbind(tr_fav, tr_unfav, tr_wnt)
@@ -153,6 +148,7 @@ tr_unfav_sp$protein_name[which(tr_unfav_sp$total_repeat_length > 15)]
 unique(tr_unfav_sp$prot_function[which(tr_unfav_sp$total_repeat_length > 15)])
 
 ## ------------------------------------------------------------------------
+# Show only a selection of variables
 sel_var <- c("ID", "begin", "msa_original", "repeat_region_length", "l_type", "prot_name", "protein_name", "gene_names", "prot_function")
 tr_wnt_sp[which(tr_wnt_sp$ID == "Q9UJU2"),sel_var]
 

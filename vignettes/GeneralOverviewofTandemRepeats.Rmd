@@ -1,6 +1,6 @@
 ---
-title: "General Overview of Tandem Repeats"
-subtitle: "An Example of Colorectal Cancer"
+title: "Tandem Repeats in Colorectal Cancer"
+subtitle: "Characterization and Functional Analysis of Tandem Repeat"
 author: "Matteo Delucchi"
 date: "May 21, 2019"
 output: rmarkdown::html_vignette
@@ -16,7 +16,7 @@ options(tibble.print_min = 4L, tibble.print_max = 4L)
 set.seed(123)
 ```
 # Introduction
-In Switzerland, colorectal cancer is among the top 3 leading cause for cancer-related mortality [1][krebsliga]. As the disease showes varying clinical outcomes and therapeutic responses, researchers try through personalized medicine find individually optimal treatments.
+In Switzerland, colorectal cancer is among the top 3 leading cause for cancer-related mortality [1][krebsliga]. As the disease shows varying clinical outcomes and therapeutic responses, researchers try through personalized medicine to find individually optimal treatments.
 
 The development of colorectal cancer (CRC) is accompanied by genetic and epigenetic mutations in onco- and tumor-suppressor genes which are supposed to cause CRC onset, progression and metastasis [2][Pancione2012] [3][Ewing2014].
 
@@ -41,7 +41,7 @@ Several altered molecular signaling pathways are involved in CRC onset, such as 
 [Boland2010]: https://doi.org/10.1053/j.gastro.2009.12.064
 
 ### Wnt / $\beta$-catenin pathway
-Upon secretion of Wnt ligand it bind to Frizzled (Fz) receptors. This results in the inactivation of the multifunctional kinase GSK-3$\beta$ and in the stabilisation of $\beta$-catenin. $\beta$-catenin is a E-cadherin cell-cell adhesion protein and transcriptional activator. If it is stabilized, it gets accumulated in the cytoplasm and is translocated into the nucleus. There it interacts with members of the lymphoid enhancer factor (LEF)/t-cell factor (TCF) and activates specific target genes.
+Upon secretion of Wnt ligand it binds to Frizzled (Fz) receptors. This results in the inactivation of the multifunctional kinase GSK-3$\beta$ and in the stabilisation of $\beta$-catenin. $\beta$-catenin is a E-cadherin cell-cell adhesion protein and transcriptional activator. If it is stabilized, it gets accumulated in the cytoplasm and is translocated into the nucleus. There it interacts with members of the lymphoid enhancer factor (LEF)/t-cell factor (TCF) and activates specific target genes.
 In absence of Wnt-signal, $\beta$-catenin is degradated preventing its nuclear translocation. The ubiquination and phosphorylation of $\beta$-catenin is controlled through casein kinase 1 (CK1) and the APC/Axin/GSK-3$\beta$-complex.
 
 Activation of the Wnt pathway through mutations in the APC gene is known to have a leading role in CRC pathogenesis. The protein product of APC is among the key components of $\beta$-catenin destruction leading to an accumulation of $\beta$-catenin which is then translocated to the nucleus where it mediates gene transcription through interaction with the LEF/TCF transcription factor family (LEF-1/LEF1, TCF-1/TCF7, TCF-3/TCF7L1, and TCF-4/TCF7L2) [10][Najdi2011].
@@ -59,7 +59,7 @@ Nuclear expression of $\beta$-catenin can be identified immunohistochemically bu
 Wnt-signaling plays a key role in early cell fate decision in embryonic stem cells and is therefore under extensive investigation in cancer research. 
 For example, the Wnt target gene *LGR5* is a multipotent stem cell marker in crypts. ASCL2, SOX9 and Paneth cell defensins are other examples of Wnt target genes controlling various steps in the differentiation process of stem cells.
 
-In different cancertypes the $\beta$-catenin dependent pathway is differentially regulated in normal tissue compared to cancerous tissue and often shows $\beta$-catenin stabilizing mutations [14][Polanski2000] [15][Rubinfeld1997] resulting in enhanced Wnt-signaling. Of many upstream and downstream components of $\beta$-catenin, APC and $\beta$-catenin are among the ones which show crucial roles in Wnt-signaling and cancer. 
+In different cancer types the $\beta$-catenin dependent pathway is differentially regulated in normal tissue compared to cancerous tissue and often shows $\beta$-catenin stabilizing mutations [14][Polanski2000] [15][Rubinfeld1997] resulting in enhanced Wnt-signaling. Of many upstream and downstream components of $\beta$-catenin, APC and $\beta$-catenin are among the ones which show crucial roles in Wnt-signaling and cancer. 
 
 Looking at mouse models with activated Wnt-pathway through *APC* mutations, revealed that mutations in APC alone are not sufficient for carcinogenic development. The Apc^min/+^ mouse models showed non-invasive intestinal tumors [16][Merritt1997]. For unfavorable carcinoma development an increased activation of proto-oncogenetic signaling pathways (i.e. *K-ras*) and additional mutations in *TGFBRII*, *SMAD4*, *TP53* may be necessary [17][Fearon1990].
 
@@ -104,7 +104,7 @@ All protein sequences were retrieved via the REST API from UniProt/Swiss-Prot Kn
 
 ### Protein Sequence Origin
 The names of CRC favorable and unfavorable genes were downloaded manually (Mai 2019) from the proteinatlas website [24][proteinatlasCRC] and saved as .tsv. 
-The sequences of proteins which are expressed from CRC favorable and unfavorable genes, were retreived from Swiss-Prot by querring all proteins from each gene. Next, we checked the .fasta file for duplicated protein IDs, which requiered manual inspection. 
+The sequences of proteins which are expressed from CRC favorable and unfavorable genes, were retreived from Swiss-Prot by querying all proteins from each gene. Next, we checked the .fasta file for duplicated protein IDs, which requiered manual inspection. 
 
 Analogously, the protein sequences for all proteins which are related to the Wnt-pathway in Swiss-Prot were retrieved and filtered for duplicates.
 
@@ -112,8 +112,8 @@ Analogously, the protein sequences for all proteins which are related to the Wnt
 [proteinatlasCRC]: https://www.proteinatlas.org/humanproteome/pathology/colorectal+cancer#colorectal%20cancerunfavourable 
 
 ## Tandem Repeat Detection \& Filtering
-For the detection and filtering of TRs, we applied the open-source python3 Tandem Repeat Annotation Library (TRAL) [25][Schaper2015]. 
-*De novo* detection of TRs in protein sequences was performed applying the detectors HHrepID, T-REKS, TRUST and XSTREAM followed by a refinement with profile Hidden Markov Models (HMM) implemented through HMMER [26][Eddy1998] to capture most of the TR units and their boundaries.
+For the detection and filtering of TRs, we applied the open-source Python 3 Tandem Repeat Annotation Library (TRAL) [25][Schaper2015]. 
+*De novo* detection of TRs in protein sequences was performed applying the detectors HHrepID, T-REKS, TRUST and XSTREAM followed by a refinement with profile Hidden Markov Models (HMM) implemented with HMMER [26][Eddy1998] to capture most of the TR units and their boundaries.
 The TRs, were then filtered on a significance level of $\alpha = 0.05$ for a Likelyhood Ratio Test under the null hypothesis of random TR sequence evolution, a TR unit divergence of $d_{TR_{units}} < 0.1$ specifying the number of substitution site dating back to the most recent TR unit ancestor, 
 a TR unit length of $l \leq 3$ specifying the number of noninsertion sites of the TR unit and 
 a TR unit number of $n \geq 2.5$ specifying the number of noninsertion sites in the TR-MSA divided by $l$ [27][Schaper2012].
@@ -124,7 +124,7 @@ a TR unit number of $n \geq 2.5$ specifying the number of noninsertion sites in 
 ### Processing TRAL Results for Data Mining in R
 The detected TR characteristics and their MSA are stored for each protein in a single .tsv and binary .pickle file. For further analysis, we join the results for all proteins in one file for each group (unfavorable, favorable, Wnt-pathway) containing only proteins which have TRs. 
 
-The TR detection and annotation workflow is implemented in python3 and freely available on [Github](https://github.com/matteodelucchi/CRC_TRs.git). For reproduction of the reported results, change the code in order to use the provided datasets. To obtain the most recent datasets, just adapt `main.py` regarding your systems specification before sourcing.
+The TR detection and annotation workflow is implemented in Python 3 and freely available on [Github](https://github.com/matteodelucchi/CRC_TRs.git). For reproduction of the reported results, change the code in order to use the provided datasets. To obtain the most recent datasets, just adapt `main.py` regarding your systems specification before sourcing.
 
 
 ## TR Characterization in CRC Associated Proteins 
@@ -154,7 +154,7 @@ tr_unfav <- load_tr_annotations(tr_crcunfavorable_path)
 tr_wnt <- load_tr_annotations(tr_wnt_path)
 ```
 
-To get deeper insights about the proteins containing TRs, more information is added from SwissProt by a left join
+To get deeper insights about the proteins containing TRs, more information is added from Swiss-Prot by a left join
 ```{r Download sp_all if it doesnt exist}
 sp_url <- "https://www.uniprot.org/uniprot/?query=organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20reviewed:yes&format=tab&columns=id,entry%20name,reviewed,protein%20names,genes,organism,length,virus%20hosts,encodedon,database(Pfam),interactor,comment(ABSORPTION),feature(ACTIVE%20SITE),comment(ACTIVITY%20REGULATION),feature(BINDING%20SITE),feature(CALCIUM%20BIND),comment(CATALYTIC%20ACTIVITY),comment(COFACTOR),feature(DNA%20BINDING),ec,comment(FUNCTION),comment(KINETICS),feature(METAL%20BINDING),feature(NP%20BIND),comment(PATHWAY),comment(PH%20DEPENDENCE),comment(REDOX%20POTENTIAL),rhea-id,feature(SITE),comment(TEMPERATURE%20DEPENDENCE)&sort=organism"
 
@@ -209,14 +209,8 @@ TR_location(tr_fav_sp, byTRtype = TRUE)
 TR_location(tr_unfav_sp, byTRtype = TRUE)
 ```
 
-Looking seperately at CRC favorable and unfavorable proteins it can be observed that favorable CRC proteins have a greater tendecy for N-terminal location of their homo-TRs. Which allows to hypothesize, that favorable CRC proteins have a signal sequence and may play extracellular roles.
-```{r warning=FALSE}
-TR_location(
-   rbind(tr_fav_sp, tr_unfav_sp, tr_wnt_sp),
-   byTRtype = TRUE)
-```
+Looking seperately at CRC favorable and unfavorable proteins it can be observed that favorable CRC proteins have a greater tendecy for N-terminal location of their homo-TRs. Which allows to hypothesize, that favorable CRC proteins may have a signal sequence and play extracellular roles more frequently than CRC unfavorable proteins.
 
-The small dataset doesn't allow to draw any final conclusions, even if we combine all groups toghether. 
 
 It could be shown [TODO][Labaj2010] that N-terminal signal peptides are rich in Leucine residues. 
 ```{r}
@@ -251,7 +245,7 @@ Plotting the amino acid frequency ratio of TRs in CRC and Wnt-/$\beta$-catenin p
 AAratio_vs_Disorderpropensity(sp_overall = TRUE)
 ```
 
-This trend is consistent with the overall amino acid frequency of all known proteins - amino acids with higher disorderpropensity are appear in TRs significantly more frequent.
+This trend is consistent with the overall amino acid frequency of all known proteins - amino acids with higher disorderpropensity appear in TRs significantly more frequent.
 
 [Labaj2010]: https://doi.org/10.1111/j.1742-4658.2010.07720.x
 
@@ -283,7 +277,7 @@ table(table(tr_wnt_sp$ID))
 ```
 Nevertheless, most of the proteins, contain only one TR-region we detect up to 11 different TR-regions i.e. in some CRC unfavorable associated proteins.
 
-In proteins associated with unfavorable CRC prognosis we found in general more proteins with $\geq 4$ TRs comüpared to the group of unfavorable or Wnt-pathway proteins.
+In proteins associated with unfavorable CRC prognosis we found in general more proteins with $\geq 4$ TRs compared to the group of unfavorable or Wnt-pathway proteins.
 ```{r multiple TR regions in unfavorable prots I}
 protein_id_by_number_of_TR(tr_unfav_sp, 11)
 eleven_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_unfav_sp, 11)[[1]]),]
@@ -298,7 +292,7 @@ five_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_un
 unique(five_TRs$protein_name)
 unique(five_TRs$prot_function)
 ```
-And Forkhead-related transcription factor 3 (ID: Q12948) appears to have 5 TR-regions which is promoting cell growth inhibition and is involved in cell migration.
+And Forkhead-related transcription factor 3 (ID: Q12948) appears to have 5 TR-regions which is promoting cell growth inhibition and is involved in cell migration [TODO refrence to section below where it's more investigated].
 
 ## Pathogenic Tandem Repeat Types Prevail
 ```{r}
@@ -353,6 +347,7 @@ Interestingly, the Numb-like protein (ID: Q9Y6R0, Numbl) contains a long (20 AA)
 
 ## Binding of LEF/TCF to $\beta$-Catenin is Mediated Through Tandem Repeats
 ```{r}
+# Show only a selection of variables
 sel_var <- c("ID", "begin", "msa_original", "repeat_region_length", "l_type", "prot_name", "protein_name", "gene_names", "prot_function")
 tr_wnt_sp[which(tr_wnt_sp$ID == "Q9UJU2"),sel_var]
 ```
@@ -397,8 +392,6 @@ tr_unfav_sp[grepl("KC", tr_unfav_sp$prot_name),sel_var]
 ```
 With the applied filtering approach, no TRs were found in any Casein kinase I isoform epsilon. Neither in the Wnt-pathway protein set nor in the CRC favorable or unfavorable set.
 
-[TODO: Just a thought. But as GSK has no relevant TRs either, this might give a hint for rareness of TRs in Kinases in general?]
-
 ### Axin Offers A Prone Site For Tandem Repeat Disorder
 ```{r}
 tr_wnt_sp[grepl("AXIN", tr_wnt_sp$prot_name),sel_var]
@@ -434,9 +427,6 @@ tr_wnt_sp[which(tr_wnt_sp$ID == "O00358"),sel_var]
 tr_unfav_sp[which(tr_unfav_sp$ID == "P10070"),sel_var]
 ```
 *FOXE1* is one of the prognostic colorectal cancer genes and can indirectly activate the Wnt/$\beta$-catenin pathway [TODO][Ma2019] and shows a central poly-A TR-region.
-
-
-TODO: is this the region where it interacts with Frizzled? Look at Frizzled where it interacts with what
 
 [Wang2015]: https://doi.org/10.1016/j.devcel.2015.01.031
 [Yang2002]: http://dx.doi.org/10.1016/S0092-8674(02)00810-3 
@@ -479,7 +469,7 @@ tr_wnt_sp[grepl("ROR", tr_wnt_sp$prot_name),sel_var]
 ```
 The inactive tyrosine-protein kinase 7 (PTK7) and Tyrosine-protein kinase transmembrane receptor (ROR2) are mainly involved in the $\beta$-catenin independent planar cell polarity Wnt-pathway. PTK7 plays an important role in cancer cell invasion [TODO][Golubkov2010].
 ROR2 is shown to suppress the Wnt/$\beta$-catenin signal and is therefore also an interesting player in the fight against cancer [TODO][Bainbridge2014].
-We couldn't detect in both of those Kinase any TRs as we couldn't in CKI and GSK3 neither. It is thus possible to hypothesise that protein kinases tend to have few TR in general which should be supported by more data though.
+We couldn't detect in both of those Kinase any TRs as we couldn't in CKI and GSK3 neither. It is thus possible to hypothesise that protein kinases tend to have few TR in general.
 
 [Golubkov2010]: http://dx.doi.org/10.1074/jbc.M110.165159
 [Bainbridge2014]: https://dx.doi.org/10.1371/journal.pone.0102695
