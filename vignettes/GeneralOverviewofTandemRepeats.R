@@ -53,11 +53,16 @@ length(unique(tr_wnt_sp$ID))/644
 ## ----warning=FALSE-------------------------------------------------------
 TR_location(
   rbind(tr_fav_sp, tr_unfav_sp),
+  plot_title = "CRC Favorable & Unfavorable Proteins",
   byTRtype = TRUE)
 
 ## ----warning=FALSE-------------------------------------------------------
-TR_location(tr_fav_sp, byTRtype = TRUE)
-TR_location(tr_unfav_sp, byTRtype = TRUE)
+TR_location(tr_fav_sp, 
+            plot_title = "CRC Favorable Proteins",
+            byTRtype = TRUE)
+TR_location(tr_unfav_sp,   
+            plot_title = "CRC Unfavorable Proteins", 
+            byTRtype = TRUE)
 
 ## ------------------------------------------------------------------------
 # combine all TR from the three groups

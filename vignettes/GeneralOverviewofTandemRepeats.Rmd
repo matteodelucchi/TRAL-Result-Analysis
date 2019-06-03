@@ -18,7 +18,7 @@ set.seed(123)
 # Introduction
 In Switzerland, colorectal cancer is among the top 3 leading cause for cancer-related mortality [1][krebsliga]. As the disease shows varying clinical outcomes and therapeutic responses, researchers try through personalized medicine to find individually optimal treatments.
 
-The development of colorectal cancer (CRC) is accompanied by genetic and epigenetic mutations in onco- and tumor-suppressor genes which are supposed to cause CRC onset, progression and metastasis [2][Pancione2012] [3][Ewing2014].
+The development of colorectal cancer (CRC) is accompanied by genetic and epigenetic mutations in onco- and tumor-suppressor (unfavorable and favorable CRC) genes which are supposed to cause CRC onset, progression and metastasis [2][Pancione2012] [3][Ewing2014].
 
 Some clinical relevant biomarkers are today already used as prognostic and/or therapeutic predictive markers [4][Rosa2015].
 
@@ -30,18 +30,20 @@ Some clinical relevant biomarkers are today already used as prognostic and/or th
 
 ## Colorectal Cancer on a Molecular Level
 Undifferentiated cells, such as colon stem progenitor cells, are located at the bottom of a crypt in healthy colons. They are able of self-renewal and pluripotency. 
-During their live-cycle of about 14 days, they differentiate in all epithelial colon cell lineages (Paneth, goblet, enterocytes and enteroendocrine) while migrating from the crypt to the top of the villus leading into apoptosis [5][Kosinski2007]. 
+During their life-cycle of about 14 days, they differentiate in all epithelial colon cell lineages (Paneth, goblet, enterocytes and enteroendocrine) while migrating from the crypt to the top of the villus leading into apoptosis [5][Kosinski2007]. 
 The maintenance of genomic integrity is essential for proper cell differentiation in the colon. If it is lost, it's easy to accumulate multiple mutations through chromosomal instability [6][Pino2010], microsatellite instability [7][Boland2010], aberrant DNA methylation [8][Goel2007] and/or DNA repair defects leading to CRC.
 
 Several altered molecular signaling pathways are involved in CRC onset, such as Wnt/APC/$\beta$-catenin, phosphoinositide 3-kinase (PI3K)/AKT/glycogen synthase kinase-3$\beta$ (GSK-3$\beta$), transforming growth factor-$\beta$ (TGF)-$\beta$/Smad, NF- κb or mismatch repair genes (MMR) [9][Rosa2015].
 
+Wnt-signaling plays a key role in early cell fate decision in embryonic stem cells and is therefore under extensive investigation in cancer research. 
+For example, the Wnt target gene *LGR5* is a multipotent stem cell marker in crypts. ASCL2, SOX9 and Paneth cell defensins are other examples of Wnt target genes controlling various steps in the differentiation process of stem cells.
 
 [Goel2007]: https://doi.org/10.1053/j.gastro.2006.09.018
 [Pino2010]: https://doi.org/10.1053/j.gastro.2009.12.065
 [Boland2010]: https://doi.org/10.1053/j.gastro.2009.12.064
 
 ### Wnt / $\beta$-catenin pathway
-Upon secretion of Wnt ligand it binds to Frizzled (Fz) receptors. This results in the inactivation of the multifunctional kinase GSK-3$\beta$ and in the stabilisation of $\beta$-catenin. $\beta$-catenin is a E-cadherin cell-cell adhesion protein and transcriptional activator. If it is stabilized, it gets accumulated in the cytoplasm and is translocated into the nucleus. There it interacts with members of the lymphoid enhancer factor (LEF)/t-cell factor (TCF) and activates specific target genes.
+Upon secretion of Wnt ligand it binds to Frizzled (Fz) receptors. This results in the inactivation of the multifunctional kinase GSK-3$\beta$ and in the stabilisation of $\beta$-catenin. $\beta$-catenin is an E-cadherin cell-cell adhesion protein and transcriptional activator. If it is stabilized, it gets accumulated in the cytoplasm and is translocated into the nucleus. There it interacts with members of the lymphoid enhancer factor (LEF)/t-cell factor (TCF) and activates specific target genes.
 In absence of Wnt-signal, $\beta$-catenin is degradated preventing its nuclear translocation. The ubiquination and phosphorylation of $\beta$-catenin is controlled through casein kinase 1 (CK1) and the APC/Axin/GSK-3$\beta$-complex.
 
 Activation of the Wnt pathway through mutations in the APC gene is known to have a leading role in CRC pathogenesis. The protein product of APC is among the key components of $\beta$-catenin destruction leading to an accumulation of $\beta$-catenin which is then translocated to the nucleus where it mediates gene transcription through interaction with the LEF/TCF transcription factor family (LEF-1/LEF1, TCF-1/TCF7, TCF-3/TCF7L1, and TCF-4/TCF7L2) [10][Najdi2011].
@@ -55,10 +57,7 @@ Nuclear expression of $\beta$-catenin can be identified immunohistochemically bu
 [Liu2000]: https://doi.org/10.1038/79859
 [Nikolouzakis2018]: https://doi.org/10.3892/or.2018.6330
 
-#### Wnt-Singnaling and Colon Cancer
-Wnt-signaling plays a key role in early cell fate decision in embryonic stem cells and is therefore under extensive investigation in cancer research. 
-For example, the Wnt target gene *LGR5* is a multipotent stem cell marker in crypts. ASCL2, SOX9 and Paneth cell defensins are other examples of Wnt target genes controlling various steps in the differentiation process of stem cells.
-
+#### Wnt-Signaling and Colon Cancer
 In different cancer types the $\beta$-catenin dependent pathway is differentially regulated in normal tissue compared to cancerous tissue and often shows $\beta$-catenin stabilizing mutations [14][Polanski2000] [15][Rubinfeld1997] resulting in enhanced Wnt-signaling. Of many upstream and downstream components of $\beta$-catenin, APC and $\beta$-catenin are among the ones which show crucial roles in Wnt-signaling and cancer. 
 
 Looking at mouse models with activated Wnt-pathway through *APC* mutations, revealed that mutations in APC alone are not sufficient for carcinogenic development. The Apc^min/+^ mouse models showed non-invasive intestinal tumors [16][Merritt1997]. For unfavorable carcinoma development an increased activation of proto-oncogenetic signaling pathways (i.e. *K-ras*) and additional mutations in *TGFBRII*, *SMAD4*, *TP53* may be necessary [17][Fearon1990].
@@ -79,10 +78,7 @@ In cancerous colon cells, TCF-1 and TCF-4 are still expressed (eventhough now as
 [Roose1999]: https://doi.org/10.1126/science.285.5435.1923
 
 #### Short Tandem Repeats in Wnt-Pathway
-We could show in [22][swissrepeat] that TRs in proteins cluster near the termini and are involved in protein-protein interaction as well as in transcription processes and DNA-binding. As shown in the section above, Wnt-signaling and the development of CRC highly depend on processes predestined for TR involvement. 
-Therefore, we'll take a closer look at the LEF/TCF transcription factor. Specifically we'll investigate if we can detect TRs with the state of the art classification method [23][Schaper2012] in LEF/TCF transcription factors and describe their role in the Wnt/$\beta$-catenin pathway with respect to CRC.
-
-But we not only investigate on LEF/TCF proteins, in fact we analyse proteins containing tandem repeats (TRs) which are expressed by CRC favorable and unfavorable genes [24][proteinatlasCRC] with a focus on the members of the Wnt/$\beta$-catenin pathway.
+We could show in [22][swissrepeat] that TRs in proteins cluster to the flanks of protein sequences and are involved in protein-protein interactions as well as in transcription processes and DNA-binding. Therefore, we investigate if we can detect TRs with the state of the art classification method [23][Schaper2012] in proteins generally associated with favorable and unfavorable CRC prognosis [24][proteinatlasCRC] and in Wnt/$\beta$-catenin pathway related proteins with a focus on LEF/TCF transcription factors.
 
 [swissrepeat]: TODO
 [Schaper2012]: https://dx.doi.org/10.1093%2Fnar%2Fgks726
@@ -127,7 +123,7 @@ The TR detection and annotation workflow is implemented in Python 3 and freely a
 
 
 ## TR Characterization in CRC Associated Proteins 
-To provide a reproducible framework of the TR characterization the following results including the data of the previous section is implemented as [R-package on github](https://github.com/matteodelucchi/TRAL-Result-Analysis.git) which can be installed like a regular R-package. Sourcing the vignette `GeneralOverviewofTandemRepeats.Rmd` allows an exact reproduction of the reported results. 
+To provide a reproducible framework of the TR characterization the following results including the data of the previous section is implemented as an [R-package on github](https://github.com/matteodelucchi/TRAL-Result-Analysis.git) which can be installed like a regular R-package. Sourcing the vignette `GeneralOverviewofTandemRepeats.Rmd` allows an exact reproduction of the reported results. 
 
 The evaluation was performed using
 ```{r sessioninfo, echo=FALSE}
@@ -198,17 +194,22 @@ TRs generally cluster to the flanks of proteins with a tendency of domain-TRs to
 ```{r warning=FALSE}
 TR_location(
   rbind(tr_fav_sp, tr_unfav_sp),
+  plot_title = "CRC Favorable & Unfavorable Proteins",
   byTRtype = TRUE)
 ```
 
 In proteins expressed from CRC favorable and unfavorable genes, homo-TRs show a tendency for N-terminal location. 
 Many of the homo-TR fall in the region allocated to signal sequences which tags the proteins for extracellular translocation through the cell membrane.
 ```{r warning=FALSE}
-TR_location(tr_fav_sp, byTRtype = TRUE)
-TR_location(tr_unfav_sp, byTRtype = TRUE)
+TR_location(tr_fav_sp, 
+            plot_title = "CRC Favorable Proteins",
+            byTRtype = TRUE)
+TR_location(tr_unfav_sp,   
+            plot_title = "CRC Unfavorable Proteins", 
+            byTRtype = TRUE)
 ```
 
-Looking seperately at CRC favorable and unfavorable proteins it can be observed that favorable CRC proteins have a greater tendecy for N-terminal location of their homo-TRs. Which allows to hypothesize, that favorable CRC proteins may have a signal sequence and play extracellular roles more frequently than CRC unfavorable proteins.
+Looking seperately at CRC favorable and unfavorable proteins it can be observed that favorable CRC proteins have a greater tendency for N-terminal location of their homo-TRs. Which allows to hypothesize, that favorable CRC proteins may have a signal sequence and play extracellular roles more frequently than CRC unfavorable proteins.
 
 
 It could be shown [TODO][Labaj2010] that N-terminal signal peptides are rich in Leucine residues. 
@@ -255,7 +256,7 @@ Proteins with TRs from the Wnt-pathway seem to be distinct from the proteins ret
 # CRC favorable proteins in Wnt pathway
 tr_fav_sp$protein_name[which(tr_fav_sp$ID %in% tr_wnt_sp$ID)]
 ```
-3 Proteins which are associated with favorable CRC prognosis are invovled in the Wnt-pathway and
+3 Proteins which are associated with favorable CRC prognosis are involved in the Wnt-pathway and
 ```{r unfav in wnt-pathway}
 # CRC unfavorable proteins in Wnt pathway
 tr_unfav_sp$protein_name[which(tr_unfav_sp$ID %in% tr_wnt_sp$ID)]
@@ -294,7 +295,9 @@ five_TRs <- tr_unfav_sp[which(tr_unfav_sp$ID == protein_id_by_number_of_TR(tr_un
 unique(five_TRs$protein_name)
 unique(five_TRs$prot_function)
 ```
-And Forkhead-related transcription factor 3 (ID: Q12948) and CLK4 splicing factor appear to have 5 TR-regions where the former is promoting cell growth inhibition and is involved in cell migration [TODO refrence to section below where it's more investigated].
+And Forkhead-related transcription factor 3 (ID: Q12948) and CLK4 splicing factor appear to have 5 TR-regions where the former is promoting cell growth inhibition and is involved in cell migration.
+
+[TODO refrence to section below where it's more investigated].
 
 ## Pathogenic Tandem Repeat Types Prevail
 ```{r}
@@ -324,7 +327,7 @@ summary(tr_fav_sp$total_repeat_length)
 summary(tr_unfav_sp$total_repeat_length)
 summary(tr_wnt_sp$total_repeat_length)
 ```
-All TR-regions have a mean number of repeat units of 7 units per TR-region. The mean TR-region length of CRC associated proteins is about 9 amino acids in a range of 6 up to 70, 53 for CRC favorable and unfavorable proteins respectively.
+All TR-regions have a mean number of repeat units of 7 units per TR-region. The mean TR-region length of CRC associated proteins is about 9 amino acids in a range of 6 up to 70 and 53 for CRC favorable and unfavorable proteins respectively.
 In Wnt-pathway related proteins we could detect a mean repeat unit number of 7 and a TR-region length of 17 ranging from 6 to 864 amino acids.
 ```{r}
 tr_wnt_sp[which(tr_wnt_sp$total_repeat_length == max(tr_wnt_sp$total_repeat_length)),]
@@ -388,7 +391,7 @@ A similar motif could be detected in TCF-3 and TCF-7 which have also a poly-G TR
 [Lee2001]: https://dx.doi.org/10.1083%2Fjcb.200102074
 
 ## $\beta$-Catenin Destruction Complex Not Only Relies On Tandem Repeats
-The $\beta$-catenin destruction complex comprises different proteins, such as adenomatosis polyposis coli (APC), Axin, protein phosphatase (PP2A), glycogen synthase kinase 3 (GSK3) and casein kinase 1$\alpha$ (CK1$\alpha$).
+The $\beta$-catenin destruction complex comprises different proteins, such as adenomatosis polyposis coli (APC), Axin, protein phosphatase (PP2A), glycogen synthase kinase 3 (GSK3) and casein kinase 1 (CK1).
 
 ### APC $\beta$-Catenin Binding Domain Contains Tandem Repeats
 ```{r}
@@ -420,7 +423,7 @@ tr_wnt_sp[grepl("AXIN", tr_wnt_sp$prot_name),sel_var]
 ```
 Mutations in AXIN1 and AXIN2 are involved with CRC pathogenesis [TODO][Liu2000]. In Axin-2 overlapping with the compositionally biased histidine region, a polyH homo-TR could be detected which falls in the region interacting with armadillo repeats in $\beta$-catenin.
 
-TRD in this region may destabilize the binding of $\beta$-catenin to the protein-complex with Axin-2 resulting in a accumulation of $\beta$-catenin followed by a transcriptional activation of the Wnt/$\beta$-catenin target genes which is known to be a leading cause CRC.
+TRD in this region may destabilize the binding of $\beta$-catenin to the protein-complex with Axin-2 resulting in an accumulation of $\beta$-catenin followed by a transcriptional activation of the Wnt/$\beta$-catenin target genes which is known to be a leading cause CRC.
 
 
 ## Dishevelled Proteins
