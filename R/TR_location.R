@@ -1,6 +1,7 @@
 #' Display TR center location
 #'
 #' @param tr_all_sp a data.frame with TR results imported through \code{\link{load_tr_annotations}}
+#' @param plot_title (str) Title of the plot
 #' @param byTRtype boolean. If TRUE, function returns plot filled by TR-type
 #' @param byProt boolean. IF TRUE, function returns plot filled by each TR.
 #' @param paperfigure boolean. If TRUE, adapts figure for publication (larger font size, ...). Modifications can be done in \code{\link{paper.figure}}
@@ -13,7 +14,7 @@
 #'
 #' @return ggplot object
 #' @export
-TR_location <- function(tr_all_sp, byTRtype = FALSE, byProt = TRUE, paperfigure = FALSE){
+TR_location <- function(tr_all_sp, plot_title = NULL, byTRtype = FALSE, byProt = TRUE, paperfigure = FALSE){
   if (byTRtype){
     # Only show one of the plot per time
     # TODO: implement showing both at the same time.
@@ -42,7 +43,7 @@ TR_location <- function(tr_all_sp, byTRtype = FALSE, byProt = TRUE, paperfigure 
     cols1.4 <- c("#2D882D", "#AA3939", "#AA7939", "#29506D")
     cols2.4 <- c("#2D882D", "#AA3939", "#AA7939", "#29506D")
 
-    p1 = ggplot(tr_all_sp_positions %>% filter(pos <= 1), aes(x = pos, colour=repeat_type_bin, fill=repeat_type_bin)) +
+    p1 <- ggplot(tr_all_sp_positions %>% filter(pos <= 1), aes(x = pos, colour=repeat_type_bin, fill=repeat_type_bin)) +
       geom_density(alpha=.7) +
       scale_color_manual( values = cols2.4, #values = c("grey","violet","turquoise4"),
                           name  ="TR type",
@@ -51,8 +52,19 @@ TR_location <- function(tr_all_sp, byTRtype = FALSE, byProt = TRUE, paperfigure 
       scale_fill_manual( values = cols1.4,
                          name  ="TR type",
                          breaks=c("(0,1]","(1,3]","(3,15]", "(15,2000]"),
-                         labels=c("Homo", "Micro", "Small","Domain")) +
-      labs(x="TR center location", y="Density")
+                         labels=c("Homo", "Micro", "Small","Domain"))
+
+    if(!is.null(plot_title)){
+      p1 <- p1 +
+        labs(x ="TR center location",
+             y = "Density",
+             title = plot_title)
+    } else {
+      p1 <- p1 +
+        labs(x ="TR center location",
+             y = "Density")
+    }
+
     p1 <- beautifier(p1, x.axis.text.angle = 0)
     if (paperfigure){
       p1 <- paper.figure(p1, x.axis.text.angle = 0)
@@ -84,6 +96,18 @@ TR_location <- function(tr_all_sp, byTRtype = FALSE, byProt = TRUE, paperfigure 
       scale_color_discrete(name = "Protein ID")+
       scale_fill_discrete(name = "Protein ID")+
       labs(x="TR center location", y="Density")
+
+    if(!is.null(plot_title)){
+      p2 <- p2 +
+        labs(x ="TR center location",
+             y = "Density",
+             title = plot_title)
+    } else {
+      p2 <- p2 +
+        labs(x ="TR center location",
+             y = "Density")
+    }
+
     p2 <- beautifier(p2, x.axis.text.angle = 0)
     if (paperfigure){
       p2 <- paper.figure(p2, x.axis.text.angle = 0)
