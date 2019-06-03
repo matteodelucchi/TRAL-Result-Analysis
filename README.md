@@ -25,6 +25,6 @@ devtools::install_github("matteodelucchi/TRALResultAnalysis")
 ```
 
 Note, to get the most recent results, download the provided files. To get the exact same results as reported in the vignette, disable the download of any file.
-This has to be done manually and will not be automated. To reduce wrong results - Know the data!
+This has to be done manually and will not be automated. To reduce wrong results - [Know the data](http://www.jonzelner.net/statistics/make/docker/reproducibility/2016/05/31/reproducibility-pt-1/)!
 
 
