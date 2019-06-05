@@ -225,7 +225,7 @@ sum(sp_kinIDs %in% tr_unfav$ID)
 (sum(sp_kinIDs %in% tr_fav$ID) + sum(sp_kinIDs %in% tr_unfav$ID))/(nrow(tr_fav)+nrow(tr_unfav))
 
 ## ------------------------------------------------------------------------
-dest_file_kinext <- "/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/data/swissprot_human_extkinome.tsv"
+dest_file_kinext <- paste0(base_path, "data/swissprot_human_extkinome.tsv")
 url_extkin <- "https://www.uniprot.org/uniprot/?query=ec:2.7.-.-%20AND%20reviewed:yes%20AND%20organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20AND%20proteome:up000005640&format=fasta&sort=score"
 sp_extkinIDS <- load_kinome(url = url_extkin, path = dest_file_kinext, OnlyIDs = TRUE)
 # No. of protein kinases in Human Proteome

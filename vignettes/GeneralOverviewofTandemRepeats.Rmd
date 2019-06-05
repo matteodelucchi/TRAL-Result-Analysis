@@ -527,7 +527,7 @@ sum(sp_kinIDs %in% tr_unfav$ID)
 Of the 483 protein kinases from the Human proteome 11 have TRs and are associated with the Wnt-pathway. 7 protein kinases have TRs and appear in the set of CRC related proteins.
 To put this in relations, of the whole human proteome 2% are protein kinases. From proteins with TRs, 4% belong to the enzyme class of protein kinases in CRC associated proteins and 6% in Wnt-pathway proteins. 
 ```{r}
-dest_file_kinext <- "/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/data/swissprot_human_extkinome.tsv"
+dest_file_kinext <- paste0(base_path, "data/swissprot_human_extkinome.tsv")
 url_extkin <- "https://www.uniprot.org/uniprot/?query=ec:2.7.-.-%20AND%20reviewed:yes%20AND%20organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20AND%20proteome:up000005640&format=fasta&sort=score"
 sp_extkinIDS <- load_kinome(url = url_extkin, path = dest_file_kinext, OnlyIDs = TRUE)
 # No. of protein kinases in Human Proteome
@@ -547,7 +547,7 @@ These findings don't support our hypothesis and even considering all phosphorous
 
 
 # Conclusion
-With the aim to provide a functional analysis of TRs in CRC associated proteins and Wnt-pathway components, we could find TR-regions potentially involved in CRC development.
+With the aim to provide a functional analysis of TRs in CRC associated proteins and Wnt-pathway components, we could find TR-regions beeing potentially involved in CRC development.
 Proteins, expressed by genes with unfavorable CRC prognosis according to the human protein atlas [TODO][proteinatlasCRC] show more TRs, than those with favorable CRC prognosis.
 [TODO: WHY?]
 
@@ -558,7 +558,7 @@ Where it already could be shown by [TODO][Hayashi2001], that the domain-TR lengt
 We further found in Numbl a long polyQ homo-TR region. Those kind of TR are prone site for diseases caused by tandem repeat disorders (TRD). Numbl is further a negative regulator of NF-$\kappa$-B pathway. Negative regulation of NF-$\kappa$-B pathway is known as a source of CRC through interaction with Wnt/$\beta$-catenin pathway. One possible interaction leading to CRC is through NF-$\kappa$-B upregulated Lef1-expression which enhances transcriptional activity of TCF/LEF [REF][MA2016].
 In the binding region of LEF1, TCF-3 and TCF7 with $\beta$-catenin, we found a polyG homo-TRs. *LEF1* has been identified as beeing only expressed in CRC cells but not in healthy colon tissue. However, it could be detected that different splicing variants in alteri result in the loss of the $\beta$-catenin binding site which acts as a transcriptional repressor often expressed in healthy colon epithelial cells [TODO][Hovanes2001].
 
-Taken together, these results suggest that TR regions may play important roles in cancer hallmark functions and provides a detailed view in their structural mechanisms. 
+Taken together, these results suggest that TR regions may play important roles in cancer hallmark functions and provide a detailed view in their structural mechanisms. 
 
 This study lays the groundwork for future research into a systemic analysis of functional mechanisms of protein TRs.
 Since we limited our detailed analysis to one of many pathways involved in CRC, a natural progression of this work is to analogously investigate on other pathways to provide a systemic overview of the interaction of CRC proteins focusing on TRs.
