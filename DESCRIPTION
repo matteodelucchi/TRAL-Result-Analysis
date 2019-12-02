@@ -9,7 +9,9 @@ Depends:
 	dplyr,
 	ggplot2,
 	Biostrings,
-	RCurl
+	RCurl,
+	gridExtra,
+	ggrepel
 Suggests: 
 	knitr, 
 	rmarkdown,
@@ -22,4 +24,4 @@ VignetteBuilder: knitr
 License: GNU GENERAL PUBLIC LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0

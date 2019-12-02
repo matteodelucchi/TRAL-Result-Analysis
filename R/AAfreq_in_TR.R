@@ -4,7 +4,7 @@
 #'
 #' @return A data.frame with AA, it's absolute frequency and it's ratios.
 #' @export
-AAfreq_in_TR <- function(tr_all_sp, includeSpaces=FALSE){
+AAfreq_in_TR <- function(tr_all_sp, includeSpaces=FALSE, aa_ignore = c("U", "O", "B", "J", "Z", "X", "*","-",".","+", "other")){
   tr_all_sp <- tr_all_sp[, grepl("msa", colnames(tr_all_sp))] # Look for the column, which contains the MSA.
   aa_freq <- alphabetFrequency(AAStringSet(tr_all_sp)) # in the 'other' column, are the spaces in between the TRs
 
@@ -18,7 +18,7 @@ AAfreq_in_TR <- function(tr_all_sp, includeSpaces=FALSE){
   df_aafreq  <- as.data.frame(aa_freq)
   df_aafreq$aa <- rownames(df_aafreq)
   # Remove NAs (*,-,.,+)
-  # df_aafreq <- subset(df_aafreq, !(df_aafreq$aa %in% aa_ignore)) #TODO add
+  df_aafreq <- subset(df_aafreq, !(df_aafreq$aa %in% aa_ignore)) #TODO add
   # Calculate aa composition ratio in TR
   for (i in 1:nrow(df_aafreq)){
     df_aafreq[i,3] <- round(df_aafreq[i,1]/sum(df_aafreq[1]), 4)

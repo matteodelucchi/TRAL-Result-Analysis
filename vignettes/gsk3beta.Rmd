@@ -1,0 +1,130 @@
+---
+title: "GSK-3-beta"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GSK-3-beta}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=6
+  )
+options(tibble.print_min = 4L, tibble.print_max = 4L)
+set.seed(123)
+```
+
+```{r setup}
+library(TRALResultAnalysis)
+```
+
+# Introduction
+[TODO: Extend and reformulate]
+
+All the molecular pathways cross-talk with each other and are regulated by one another. Interestingly, concerted regulation exists between NF-κB, Wnt and other adhesion proteins such as E-cadherin. E-cadherin directly binds to β-catenin and NF-κB sequestering them at the plasma membrane level and subtracting them from the nucleus. When the transcription of WNT5A is activated by NF-κB, WNT5A binds its specific Wnt receptor inducing transcription of target genes such as snail, CD44 and YAP1. Snail upregulation, in turn, represses E-cadherin expression releasing β-catenin and NF-κB, available to translocate into the nucleus (43,44).
+
+GSK-3β is a protein that has a pivotal role in cross-talk between Wnt and NF-κB (45). In colon and pancreatic cancer cells, GSK-3β positively regulates NF-κB activity and its activation confers a selective growth advantage to these cells, therefore acting as a tumour promoter (46). The molecular mechanisms underlying GSK-3β/NF-κB interaction remain to be further investigated. More than 100 proteins, involved in a wide spectrum of cellular processes, are substrates of GSK-3β, of which β-catenin and NF-κB inhibitor iκb are the most well known. Genes upregulated by β-catenin/TCF/LEF and/or NF-κB include proto-oncogenes, such as c-Myc and cyclin-D1, and genes regulating cell invasion/migration, such as Snail, CD44 and MMP-7 (47). [TODO][Rosa2015]
+
+[Rosa2015][https://doi.org/10.3892/or.2015.4108]
+
+# Methods
+Same as the others. See Generaloverview.rmd.
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+base_path <- "/home/delt/ZHAW/TRALResultAnalysis/"
+```
+
+```{r Housekeeping, message=FALSE, warning=FALSE, collapse=TRUE}
+library(TRALResultAnalysis)
+tr_crcfavorable_path <- paste0(base_path, "inst/extdata/TRs_favorable_proteins_CRC_sp_l1000.tsv")
+tr_crcunfavorable_path <- paste0(base_path, "inst/extdata/TRs_unfavorable_proteins_CRC_sp_l1000.tsv")
+tr_gsk3b_path <- paste0(base_path, "inst/extdata/TRs_gsk3beta_proteins_CRC_sp_l1000.tsv")
+dest_file_sp <- paste0(base_path, "data/swissprot_human.tsv")
+dest_file_kin <- paste0(base_path, "data/swissprot_human_kinome.tsv")
+```
+
+```{r load data sets, eval=TRUE, echo=FALSE, message=TRUE, warning=TRUE}
+tr_fav <- load_tr_annotations(tr_crcfavorable_path)
+tr_unfav <- load_tr_annotations(tr_crcunfavorable_path)
+tr_gsk3b <- load_tr_annotations(tr_gsk3b_path)
+```
+
+To get deeper insights about the proteins containing TRs, more information is added from Swiss-Prot by a left join
+```{r Download sp_all if it doesnt exist}
+sp_url <- "https://www.uniprot.org/uniprot/?query=organism:%22Homo%20sapiens%20(Human)%20[9606]%22%20reviewed:yes&format=tab&columns=id,entry%20name,reviewed,protein%20names,genes,organism,length,virus%20hosts,encodedon,database(Pfam),interactor,comment(ABSORPTION),feature(ACTIVE%20SITE),comment(ACTIVITY%20REGULATION),feature(BINDING%20SITE),feature(CALCIUM%20BIND),comment(CATALYTIC%20ACTIVITY),comment(COFACTOR),feature(DNA%20BINDING),ec,comment(FUNCTION),comment(KINETICS),feature(METAL%20BINDING),feature(NP%20BIND),comment(PATHWAY),comment(PH%20DEPENDENCE),comment(REDOX%20POTENTIAL),rhea-id,feature(SITE),comment(TEMPERATURE%20DEPENDENCE)&sort=organism"
+
+# Download the swissprot file only if it doesn't already exist.
+# Uncomment this, if you want to use the most recent available data!
+if(!file.exists(dest_file_sp)){
+    download.file(sp_url, destfile = dest_file_sp)
+}
+
+sp_all_fav <- load_swissprot(dest_file_sp, tr_fav)
+sp_all_unfav <- load_swissprot(dest_file_sp, tr_unfav)
+sp_all_gsk3b <- load_swissprot(dest_file_sp, tr_gsk3b)
+
+tr_unfav_sp <- merge(x = tr_unfav, y = sp_all_unfav, by = "ID", all.x = TRUE)
+tr_fav_sp <- merge(x = tr_fav, y = sp_all_fav, by = "ID", all.x = TRUE)
+tr_gsk3b_sp <- merge(x = tr_gsk3b, y = sp_all_gsk3b, by = "ID", all.x = TRUE)
+```
+
+
+# Results \& Discussion
+
+109 proteins were associated in Swiss-Prot with the GSK-3$\beta$-pathway, where we could *de novo* detect 218 TRs of which 42 TRs remained after filtering and clustering. 
+
+
+## More TRs Were Detected in Proteins Associated With GSK-3$\beta$ Pathway
+```{r fraction of TR containing proteins}
+# CRC favorable
+length(unique(tr_fav_sp$ID))/403 # through unique() we ensure to count those proteins with >1 TR only once.
+
+# CRC unfavorable
+length(unique(tr_unfav_sp$ID))/286 
+
+# Wnt pathway
+length(unique(tr_gsk3b_sp$ID))
+length(unique(tr_gsk3b_sp$ID))/109
+```
+Of all proteins expressed by genes associated for beeing favorable or unfavorable for CRC, 10% and 23% contain at least one TR respectively. Analogously, we could detect TRs in 42 (27%) of the 109 proteins involved in the Human GSK-3$\beta$-pathway.
+
+## AA bias in TRs
+[NO AA COMPOSITION ANALYSIS BECAUSE OF LITTLE AMAOUNT OF SEQUENCES]
+
+## TR length distribution in the NF-$\kappa$-B Pathway
+
+```{r}
+plot_TRunitnoTRunitlength(tr_sp = tr_gsk3b_sp, ngeq = 10, lgeq = 3)
+```
+
+
+### Interesting TRs
+Summarising uniprot functions with a focus on CRC.
+
+#### DIAP1
+[TODO]
+```{r}
+tr_gsk3b_sp[which(tr_gsk3b_sp$prot_name == 'DIAP1_HUMAN'),c(1,31)]
+```
+
+#### DAB2P
+
+#### H15
+
+#### MACF1
+
+#### GSK3A
+
+
+## GSK-3$\beta$ in CRC associated proteins
+```{r}
+(tr_fav_sp[which(tr_fav_sp$ID %in% tr_gsk3b_sp$ID),])
+```
+
+```{r}
+nrow(tr_unfav[which(tr_unfav$ID %in% tr_gsk3b_sp$ID),])
+```

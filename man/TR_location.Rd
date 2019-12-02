@@ -4,8 +4,13 @@
 \alias{TR_location}
 \title{Display TR center location}
 \usage{
-TR_location(tr_all_sp, plot_title = NULL, byTRtype = FALSE,
-  byProt = TRUE, paperfigure = FALSE)
+TR_location(
+  tr_all_sp,
+  plot_title = NULL,
+  byTRtype = FALSE,
+  byProt = TRUE,
+  paperfigure = FALSE
+)
 }
 \arguments{
 \item{tr_all_sp}{a data.frame with TR results imported through \code{\link{load_tr_annotations}}}

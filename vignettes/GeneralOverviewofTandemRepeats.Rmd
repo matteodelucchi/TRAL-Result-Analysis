@@ -1,6 +1,6 @@
 ---
 title: "Tandem Repeats in Colorectal Cancer"
-subtitle: "Characterization and Functional Analysis of Tandem Repeat"
+subtitle: "Characterization and Functional Analysis of Tandem Repeats"
 author: "Matteo Delucchi"
 date: "May 21, 2019"
 output: rmarkdown::html_vignette
@@ -116,7 +116,7 @@ Analogously, the protein sequences for all proteins which are related to the Wnt
 For the detection and filtering of TRs, we applied the open-source Python 3 Tandem Repeat Annotation Library (TRAL) [25][Schaper2015]. 
 *De novo* detection of TRs in protein sequences was performed applying the detectors HHrepID, T-REKS, TRUST and XSTREAM followed by a refinement with profile Hidden Markov Models (HMM) implemented with HMMER [26][Eddy1998] to capture most of the TR units and their boundaries.
 The TRs, were then filtered on a significance level of $\alpha = 0.05$ for a Likelyhood Ratio Test under the null hypothesis of random TR sequence evolution, a TR unit divergence of $d_{TR_{units}} < 0.1$ specifying the number of substitution site dating back to the most recent TR unit ancestor, 
-a TR unit length of $l \leq 100$ specifying the number of noninsertion sites of the TR unit and 
+a TR unit length of $l \leq 1000$ specifying the number of noninsertion sites of the TR unit and 
 a TR unit number of $n \geq 2.5$ specifying the number of noninsertion sites in the TR-MSA divided by $l$ [27][Schaper2012].
 
 [Schaper2015]: https://doi.org/10.1093/bioinformatics/btv306
@@ -137,14 +137,14 @@ sessionInfo()
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
-base_path <- "/home/matteo/polybox/MSc_ACLS/master_thesis/TRALResultAnalysis/"
+base_path <- "/home/delt/ZHAW/TRALResultAnalysis/"
 ```
 
 ```{r Housekeeping, message=FALSE, warning=FALSE, collapse=TRUE}
 library(TRALResultAnalysis)
-tr_crcfavorable_path <- paste0(base_path, "inst/extdata/TRs_favorable_proteins_CRC_sp_l100.tsv")
-tr_crcunfavorable_path <- paste0(base_path, "inst/extdata/TRs_unfavorable_proteins_CRC_sp_l100.tsv")
-tr_wnt_path <- paste0(base_path, "inst/extdata/TRs_Wnt_proteins_CRC_sp_l100.tsv")
+tr_crcfavorable_path <- paste0(base_path, "inst/extdata/TRs_favorable_proteins_CRC_sp_l1000.tsv")
+tr_crcunfavorable_path <- paste0(base_path, "inst/extdata/TRs_unfavorable_proteins_CRC_sp_l1000.tsv")
+tr_wnt_path <- paste0(base_path, "inst/extdata/TRs_Wnt_proteins_CRC_sp_l1000.tsv")
 dest_file_sp <- paste0(base_path, "data/swissprot_human.tsv")
 dest_file_kin <- paste0(base_path, "data/swissprot_human_kinome.tsv")
 ```
@@ -177,9 +177,9 @@ tr_wnt_sp <- merge(x = tr_wnt, y = sp_all_wnt, by = "ID", all.x = TRUE)
 
 # Results \& Discussion
 
-In 243 genes associated with unfavorable CRC expressing 286 proteins we could *de novo* detect 617  TRs of which after filtering and clustering 106 TRs remained. In CRC favorable genes (352) 403 proteins are expressed, where we could *de novo* detect 486 TRs with 50 TRs beeing left after filtering and clustering.
+In 243 genes associated with unfavorable CRC expressing 286 proteins we could *de novo* detect 572  TRs of which after filtering and clustering 67 TRs remained. In CRC favorable genes (352) 403 proteins are expressed, where we could *de novo* detect 806 TRs with 42 TRs beeing left after filtering and clustering.
 
-Additionally, 644 proteins were associated in Swiss-Prot with the Wnt-pathway, where we could *de novo* detect 1353 TRs of which 199 TRs remained after filtering and clustering. 
+Additionally, 644 proteins were associated in Swiss-Prot with the Wnt-pathway, where we could *de novo* detect 2768 TRs of which 268 TRs remained after filtering and clustering. 
 
 ## More TRs Were Detected in Proteins Associated With Unfavorable CRC Prognosis
 ```{r fraction of TR containing proteins}
@@ -193,7 +193,7 @@ length(unique(tr_unfav_sp$ID))/286
 length(unique(tr_wnt_sp$ID))
 length(unique(tr_wnt_sp$ID))/644 
 ```
-Of all proteins expressed by genes associated for beeing favorable or unfavorable for CRC, 10% and 23% contain at least one TR respectively. Analogously, we could detect TRs in 143 (22%) of the 644 proteins involved in the Human Wnt-pathway.
+Of all proteins expressed by genes associated for beeing favorable or unfavorable for CRC, 10% and 23% contain at least one TR respectively. Analogously, we could detect TRs in 268 (42%) of the 644 proteins involved in the Human Wnt-pathway.
 
 ## Homo-TR Cluster Towards the N-Terminus
 TRs generally cluster to the flanks of proteins with a tendency of domain-TRs to cluster near the N-terminus [TODO][swissrepeat].
@@ -233,7 +233,7 @@ AAfreq_all[which(AAfreq_all$aa == "L"),]
 AAfreq_all_homo[which(AAfreq_all_homo$aa == "L"),]
 ```
 We combine all datasets and count the amino acid frequency and compare it to the amino acid frequency in homo-TRs which doesn't show much difference for Lysine. 
-However, we can see, that Alanine is most frequent (14%) followed by Serine (12%) and Proline (12%) in CRC and Wnt-/$\beta$-catenin pathway associated proteins.
+However, we can see, that Alanine is most frequent (14%) followed by Proline (12%) and Serine (12%) in CRC and Wnt-/$\beta$-catenin pathway associated proteins.
 
 ```{r TODO is this necessary}
 # (AAfreq_fav <- AAfreq_in_TR(tr_fav))
@@ -262,12 +262,12 @@ Proteins with TRs from the Wnt-pathway seem to be distinct from the proteins ret
 # CRC favorable proteins in Wnt pathway
 tr_fav_sp$protein_name[which(tr_fav_sp$ID %in% tr_wnt_sp$ID)]
 ```
-3 Proteins which are associated with favorable CRC prognosis are involved in the Wnt-pathway and
+5 Proteins which are associated with favorable CRC prognosis are involved in the Wnt-pathway and
 ```{r unfav in wnt-pathway}
 # CRC unfavorable proteins in Wnt pathway
 tr_unfav_sp$protein_name[which(tr_unfav_sp$ID %in% tr_wnt_sp$ID)]
 ```
-5 with unfavorable prognosis.
+7 with unfavorable prognosis.
 
 ## Nucleic Acid Binding Proteins Show Many Repeat Regions
 The number of detected TRs exceeds the number of analysed proteins which suggests that there are proteins with more than one TR-region.

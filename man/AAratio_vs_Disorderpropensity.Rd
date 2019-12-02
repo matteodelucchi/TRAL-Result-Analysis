@@ -4,8 +4,7 @@
 \alias{AAratio_vs_Disorderpropensity}
 \title{Amino Acid Ratio Plotted Against Disorderpropensity}
 \usage{
-AAratio_vs_Disorderpropensity(tr_all, plot_title = NULL,
-  sp_overall = FALSE)
+AAratio_vs_Disorderpropensity(tr_all, plot_title = NULL, sp_overall = FALSE)
 }
 \arguments{
 \item{tr_all}{a data.frame with TR results imported through \code{\link{load_tr_annotations}}. Requires to have the MSA included as column.}

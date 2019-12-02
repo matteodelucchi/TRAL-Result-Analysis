@@ -4,8 +4,13 @@
 \alias{TRdist_in_proteome}
 \title{Tandem Repeat Distribution in Proteome}
 \usage{
-TRdist_in_proteome(tr_all_sp, paperfigure = FALSE, max_pvalue = 0.01,
-  max_l_effective = 80, max_n_effective = 40)
+TRdist_in_proteome(
+  tr_all_sp,
+  paperfigure = FALSE,
+  max_pvalue = 0.01,
+  max_l_effective = 80,
+  max_n_effective = 40
+)
 }
 \arguments{
 \item{tr_all_sp}{a data.frame with TR results imported through \code{\link{load_tr_annotations}}}
