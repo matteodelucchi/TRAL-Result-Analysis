@@ -1,5 +1,5 @@
 # user specific directories
-
+*.html
 data/swissprot_human_extkinome.tsv
 inst/extdata/Wnt_pathwaymap.png
 
@@ -39,3 +39,7 @@ inst/extdata/Wnt_pathwaymap.png
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+inst/doc
+
+# R Environment Variables
+.Renviron
